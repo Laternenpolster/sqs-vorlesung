@@ -25,6 +25,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore WebApplication1/WebApplication1.sln
     - name: Ensure browsers are installed
-      run: pwsh WebApplication1/WebApplication1/bin/Debug/net8.0/playwright.ps1 install --with-deps
+      run: pwsh WebApplication1/TestProject1/bin/Debug/net8.0/playwright.ps1 install --with-deps
     - name: Test
       run: dotnet test --no-build --verbosity normal WebApplication1/WebApplication1.sln
