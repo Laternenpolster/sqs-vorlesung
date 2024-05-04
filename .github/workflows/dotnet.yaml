@@ -22,9 +22,21 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore WebApplication1/WebApplication1.sln
+    - name: Sonarqube Begin
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: | 
+        dotnet tool install --global dotnet-sonarscanner
+        dotnet sonarscanner begin /k:"laternenpolster_sqs-vorlesung" /o:"laternenpolster" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
     - name: Build
       run: dotnet build --no-restore WebApplication1/WebApplication1.sln
     - name: Ensure browsers are installed
       run: pwsh WebApplication1/TestProject1/bin/Debug/net8.0/playwright.ps1 install --with-deps
     - name: Test
-      run: dotnet test --no-build --verbosity normal WebApplication1/WebApplication1.sln
+      run: dotnet test --no-build --verbosity normal --settings coverlet.runsettings --logger:trx WebApplication1/WebApplication1.sln
+    - name: Sonarqube end
+      run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
