@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace WebApplication1.Services;
+namespace PokemonLookup.Web.Services;
 
 public class ApiRequester(HttpClient client) : IApiRequester
 {

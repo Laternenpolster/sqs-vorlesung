@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Models;
+﻿namespace PokemonLookup.Web.Models;
 
 public class PokedexResult
 {

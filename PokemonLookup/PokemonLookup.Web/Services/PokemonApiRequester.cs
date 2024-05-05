@@ -1,6 +1,6 @@
-﻿using WebApplication1.Models;
+﻿using PokemonLookup.Web.Models;
 
-namespace WebApplication1.Services;
+namespace PokemonLookup.Web.Services;
 
 public class PokemonApiRequester(IApiRequester apiRequester) : IPokemonApiRequester
 {

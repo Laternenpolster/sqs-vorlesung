@@ -1,6 +1,6 @@
-﻿using RichardSzalay.MockHttp;
-using WebApplication1.Models;
-using WebApplication1.Services;
+﻿using PokemonLookup.Web.Models;
+using PokemonLookup.Web.Services;
+using RichardSzalay.MockHttp;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace TestProject1.Services;

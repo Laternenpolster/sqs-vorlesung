@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
-using WebApplication1.Services;
+using PokemonLookup.Web.Models;
+using PokemonLookup.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,9 +1,9 @@
 ﻿services:
-  webapplication1:
-    image: webapplication1
+  pokemonlookup:
+    image: pokemonlookup
     build:
       context: .
-      dockerfile: WebApplication1/Dockerfile
+      dockerfile: PokemonLookup.Web/Dockerfile
     depends_on:
       - postgres
     ports:

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Models;
+namespace PokemonLookup.Web.Models;
 
 public class DataContext(DbContextOptions options) : DbContext(options)
 {

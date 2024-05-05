@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Services;
+﻿namespace PokemonLookup.Web.Services;
 
 public interface IApiRequester
 {
