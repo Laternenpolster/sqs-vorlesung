@@ -1,7 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using WebApplication1.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Build the connection string for the database
+var dbUser = Environment.GetEnvironmentVariable("DATABASE_USER");
+var dbPassword = Environment.GetEnvironmentVariable("DATABASE_PASSWORD");
+var dbDatabase = Environment.GetEnvironmentVariable("DATABASE_DB");
+
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseNpgsql($"Host=postgres;Username={dbUser};Password={dbPassword};Database={dbDatabase}"));
 
 var app = builder.Build();
 
@@ -21,5 +32,10 @@ app.UseRouting();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Check if the required database structure exists
+using var scope = app.Services.CreateScope();
+using var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+dbContext.Database.EnsureCreated();
 
 app.Run();
