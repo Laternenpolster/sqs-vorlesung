@@ -1,10 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
+using WebApplication1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<IApiRequester, ApiRequester>();
+builder.Services.AddSingleton<IPokemonApiRequester, PokemonApiRequester>();
 
 // Build the connection string for the database
 var dbUser = Environment.GetEnvironmentVariable("DATABASE_USER");
