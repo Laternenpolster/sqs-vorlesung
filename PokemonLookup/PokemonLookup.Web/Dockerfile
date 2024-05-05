@@ -11,11 +11,11 @@ COPY ["PokemonLookup.Web/PokemonLookup.Web.csproj", "PokemonLookup.Web/"]
 RUN dotnet restore "PokemonLookup.Web/PokemonLookup.Web.csproj"
 COPY . .
 WORKDIR "/src/PokemonLookup.Web"
-RUN dotnet build "PokemonLookup.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "PokemonLookup.Web.csproj" -c ${BUILD_CONFIGURATION} -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "PokemonLookup.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "PokemonLookup.Web.csproj" -c ${BUILD_CONFIGURATION} -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
