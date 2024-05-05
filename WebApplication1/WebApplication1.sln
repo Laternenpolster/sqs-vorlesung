@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{485E92D9-C425-4C99-AED3-965E27DACE42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonLookup.Web", "PokemonLookup.Web\PokemonLookup.Web.csproj", "{485E92D9-C425-4C99-AED3-965E27DACE42}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{88774F40-75D5-466B-A405-5B9ADA821DC5}"
 	ProjectSection(SolutionItems) = preProject

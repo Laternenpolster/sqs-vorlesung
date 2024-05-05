@@ -34,7 +34,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WebApplication1\WebApplication1.csproj" />
+      <ProjectReference Include="..\PokemonLookup.Web\PokemonLookup.Web.csproj" />
     </ItemGroup>
 
 </Project>
