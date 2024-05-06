@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+﻿using PokemonLookup.Web.Exceptions;
 
 namespace PokemonLookup.Web.Services;
 
@@ -12,12 +12,7 @@ public class ApiRequester(HttpClient client) : IApiRequester
             response.EnsureSuccessStatusCode();
             var result = await response.Content.ReadFromJsonAsync<T>();
 
-            if (result == null)
-            {
-                throw new JsonException("Deserialized object is null!");
-            }
-
-            return result;
+            return result!;
         }
         catch (HttpRequestException requestException)
         {

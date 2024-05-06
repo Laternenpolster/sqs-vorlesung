@@ -12,6 +12,7 @@ builder.Services.AddSingleton<IInputChecker, InputChecker>();
 builder.Services.AddScoped<ICachingService, CachingService>();
 builder.Services.AddSingleton<IApiRequester, ApiRequester>();
 builder.Services.AddSingleton<IPokemonApiRequester, PokemonApiRequester>();
+builder.Services.AddScoped<IPokemonLibrary, PokemonLibrary>();
 
 // Build the connection string for the database
 var dbUser = Environment.GetEnvironmentVariable("DATABASE_USER");

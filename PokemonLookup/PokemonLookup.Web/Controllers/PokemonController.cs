@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using PokemonLookup.Web.Exceptions;
 using PokemonLookup.Web.Models;
 using PokemonLookup.Web.Services;
 
