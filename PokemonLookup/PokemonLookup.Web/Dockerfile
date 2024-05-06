@@ -9,7 +9,9 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["PokemonLookup.Web/PokemonLookup.Web.csproj", "PokemonLookup.Web/"]
 RUN dotnet restore "PokemonLookup.Web/PokemonLookup.Web.csproj"
-COPY . .
+COPY ./PokemonLookup.Web ./PokemonLookup.Web
+COPY ./TestProject1 ./TestProject1
+COPY ./PokemonLookup.sln ./PokemonLookup.sln
 WORKDIR "/src/PokemonLookup.Web"
 RUN dotnet build "PokemonLookup.Web.csproj" -c ${BUILD_CONFIGURATION} -o /app/build
 
