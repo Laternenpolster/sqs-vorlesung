@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient();
+builder.Services.AddSingleton<IInputChecker, InputChecker>();
 builder.Services.AddSingleton<IApiRequester, ApiRequester>();
 builder.Services.AddSingleton<IPokemonApiRequester, PokemonApiRequester>();
 
