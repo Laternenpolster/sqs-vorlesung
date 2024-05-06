@@ -29,7 +29,7 @@ jobs:
       run: dotnet restore WebApplication1/WebApplication1.sln
     - name: Setup Code Coverage
       run: |
-        sudo apt-get update && sudo apt-get install glibc-source libxml2 -y
+        sudo apt-get update && sudo apt-get install glibc-source libxml2 libxrender1 libfontconfig libxext6 libc6 -y
         dotnet tool install --global dotnet-coverage
     - name: Sonarqube Begin
       env:
