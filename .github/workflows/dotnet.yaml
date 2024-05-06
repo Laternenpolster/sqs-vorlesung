@@ -28,7 +28,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore WebApplication1/WebApplication1.sln
     - name: Setup Code Coverage
-      run: dotnet tool install --global dotnet-coverage
+      run: |
+        apt update && apt install glibc-source libxml2 -y
+        dotnet tool install --global dotnet-coverage
     - name: Sonarqube Begin
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -41,6 +43,8 @@ jobs:
     - name: Ensure browsers are installed
       run: pwsh WebApplication1/TestProject1/bin/Debug/net8.0/playwright.ps1 install --with-deps
     - name: Test
+      run: dotnet test --no-build --verbosity normal WebApplication1/WebApplication1.sln
+    - name: Coverage
       run: dotnet-coverage collect "dotnet test PokemonLookup/PokemonLookup.sln" -f xml -o "coverage.xml"
     - name: Sonarqube end
       run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
