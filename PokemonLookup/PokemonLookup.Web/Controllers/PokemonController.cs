@@ -5,14 +5,14 @@ using PokemonLookup.Web.Services;
 
 namespace PokemonLookup.Web.Controllers;
 
-public class PokemonController(IPokemonApiRequester apiRequester) : Controller
+public class PokemonController(IPokemonLibrary library) : Controller
 {
     [HttpGet]
     public async Task<IActionResult> Index(string name)
     {
         try
         {
-            var apiResult = await apiRequester.SearchByName(name);
+            var apiResult = await library.FetchPokemon(name);
             var result = new PokemonResultViewModel
             {
                 FoundPokemon = apiResult
