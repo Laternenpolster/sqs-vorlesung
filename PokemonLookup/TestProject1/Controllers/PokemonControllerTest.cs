@@ -42,7 +42,7 @@ public class PokemonControllerTest
         // Arrange
         var mockLibrary = new Mock<IPokemonLibrary>();
         mockLibrary.Setup(service => service.FetchPokemon(InvalidPokemonName))
-            .Throws(() => new ApiRequestFailedException(null, 404));
+            .Throws(() => new ApiRequestFailedException(null!, 404));
 
         var controller = new PokemonController(mockLibrary.Object);
         
