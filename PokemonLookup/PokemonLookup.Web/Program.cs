@@ -9,6 +9,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<IInputChecker, InputChecker>();
+builder.Services.AddScoped<ICachingService, CachingService>();
 builder.Services.AddSingleton<IApiRequester, ApiRequester>();
 builder.Services.AddSingleton<IPokemonApiRequester, PokemonApiRequester>();
 
