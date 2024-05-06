@@ -27,19 +27,25 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore PokemonLookup/PokemonLookup.sln
+    - name: Setup Code Coverage
+      run: |
+        sudo apt-get update && sudo apt-get install glibc-source libxml2 libxrender1 libfontconfig libxext6 libc6 -y
+        dotnet tool install --global dotnet-coverage
     - name: Sonarqube Begin
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: | 
         dotnet tool install --global dotnet-sonarscanner
-        dotnet sonarscanner begin /k:"laternenpolster_sqs-vorlesung" /o:"laternenpolster" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        dotnet sonarscanner begin /k:"laternenpolster_sqs-vorlesung" /o:"laternenpolster" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
     - name: Build
-      run: dotnet build --no-restore PokemonLookup/PokemonLookup.sln
+      run: dotnet build --no-restore --no-incremental PokemonLookup/PokemonLookup.sln
     - name: Ensure browsers are installed
       run: pwsh PokemonLookup/TestProject1/bin/Debug/net8.0/playwright.ps1 install --with-deps
     - name: Test
-      run: dotnet test --no-build --verbosity normal --settings coverlet.runsettings --logger:trx PokemonLookup/PokemonLookup.sln
+      run: dotnet test --no-build --verbosity normal PokemonLookup/PokemonLookup.sln
+    - name: Coverage
+      run: dotnet-coverage collect "dotnet test PokemonLookup/PokemonLookup.sln" -f xml -o "coverage.xml"
     - name: Sonarqube end
       run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
       env:
