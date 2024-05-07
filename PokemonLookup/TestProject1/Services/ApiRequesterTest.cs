@@ -4,6 +4,7 @@ using PokemonLookup.Web.Models;
 using PokemonLookup.Web.Services;
 using RichardSzalay.MockHttp;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using static TestProject1.TestDataProvider;
 
 namespace TestProject1.Services;
 
@@ -11,7 +12,6 @@ namespace TestProject1.Services;
 [TestOf(typeof(ApiRequester))]
 public class ApiRequesterTest
 {
-    private const string PokemonName = "abcdefg";
     private const string TestUrl = "https://google.com";
     private const string ContentType = "application/json";
     
@@ -32,7 +32,7 @@ public class ApiRequesterTest
         
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(GetCachedTestPokemon().Name));
+        Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
     }
     
     [Test]
@@ -85,17 +85,9 @@ public class ApiRequesterTest
         }
     }
     
-    private static Pokemon GetCachedTestPokemon()
-    {
-        return new Pokemon
-        {
-            Name = PokemonName
-        };
-    }
-    
     private static string GetValidHttpResponse()
     {
-        var testObject = GetCachedTestPokemon();
+        var testObject = GetValidTestPokemon();
         return JsonSerializer.Serialize(testObject);
     }
 }

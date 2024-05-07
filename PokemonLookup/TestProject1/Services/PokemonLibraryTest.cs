@@ -2,6 +2,7 @@ using Moq;
 using PokemonLookup.Web.Exceptions;
 using PokemonLookup.Web.Models;
 using PokemonLookup.Web.Services;
+using static TestProject1.TestDataProvider;
 
 namespace TestProject1.Services;
 
@@ -9,9 +10,6 @@ namespace TestProject1.Services;
 [TestOf(typeof(PokemonLibrary))]
 public class PokemonLibraryTest
 {
-    private const string ValidPokemonName = "abcdefg";
-    private const string InvalidPokemonName = ";.-";
-    
     [Test]
     public async Task TestValidItemNotInCache()
     {
@@ -22,7 +20,7 @@ public class PokemonLibraryTest
 
         var mockApiRequester = new Mock<IPokemonApiRequester>();
         mockApiRequester.Setup(service => service.SearchByName(ValidPokemonName))
-            .ReturnsAsync(GetTestPokemon());
+            .ReturnsAsync(GetValidTestPokemon());
 
         var mockCachingService = new Mock<ICachingService>();
         mockCachingService.Setup(service => service.GetItemFromCache(ValidPokemonName))
@@ -35,7 +33,7 @@ public class PokemonLibraryTest
         
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(GetTestPokemon().Name));
+        Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
         
         mockApiRequester.Verify(service => service.SearchByName(ValidPokemonName), Times.Exactly(1));
         mockCachingService.Verify(service => service.UpdateCache(result), Times.Exactly(1));
@@ -51,11 +49,11 @@ public class PokemonLibraryTest
 
         var mockApiRequester = new Mock<IPokemonApiRequester>();
         mockApiRequester.Setup(service => service.SearchByName(ValidPokemonName))
-            .ReturnsAsync(GetTestPokemon());
+            .ReturnsAsync(GetValidTestPokemon());
 
         var mockCachingService = new Mock<ICachingService>();
         mockCachingService.Setup(service => service.GetItemFromCache(ValidPokemonName))
-            .ReturnsAsync(GetTestPokemon());
+            .ReturnsAsync(GetValidTestPokemon());
         
         var library = new PokemonLibrary(mockInputChecker.Object, mockApiRequester.Object, mockCachingService.Object);
         
@@ -64,7 +62,7 @@ public class PokemonLibraryTest
         
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(GetTestPokemon().Name));
+        Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
         
         mockApiRequester.Verify(service => service.SearchByName(ValidPokemonName), Times.Never);
         mockCachingService.Verify(service => service.UpdateCache(result), Times.Never);
@@ -80,7 +78,7 @@ public class PokemonLibraryTest
 
         var mockApiRequester = new Mock<IPokemonApiRequester>();
         mockApiRequester.Setup(service => service.SearchByName(InvalidPokemonName))
-            .ReturnsAsync(GetTestPokemon());
+            .ReturnsAsync(GetValidTestPokemon());
 
         var mockCachingService = new Mock<ICachingService>();
         mockCachingService.Setup(service => service.GetItemFromCache(InvalidPokemonName))
@@ -94,13 +92,5 @@ public class PokemonLibraryTest
         mockApiRequester.Verify(service => service.SearchByName(InvalidPokemonName), Times.Never);
         mockCachingService.Verify(service => service.UpdateCache(It.IsAny<Pokemon>()), Times.Never);
         mockCachingService.Verify(service => service.GetItemFromCache(InvalidPokemonName), Times.Never);
-    }
-    
-    private static Pokemon GetTestPokemon()
-    {
-        return new Pokemon
-        {
-            Name = ValidPokemonName
-        };
     }
 }

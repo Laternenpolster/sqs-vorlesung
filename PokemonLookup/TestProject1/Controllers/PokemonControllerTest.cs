@@ -4,6 +4,7 @@ using PokemonLookup.Web.Controllers;
 using PokemonLookup.Web.Exceptions;
 using PokemonLookup.Web.Models;
 using PokemonLookup.Web.Services;
+using static TestProject1.TestDataProvider;
 
 namespace TestProject1.Controllers;
 
@@ -11,16 +12,13 @@ namespace TestProject1.Controllers;
 [TestOf(typeof(PokemonController))]
 public class PokemonControllerTest
 {
-    private const string ValidPokemonName = "abcdefg";
-    private const string InvalidPokemonName = ";.-";
-    
     [Test]
     public async Task TestControllerWithoutError()
     {
         // Arrange
         var mockLibrary = new Mock<IPokemonLibrary>();
         mockLibrary.Setup(service => service.FetchPokemon(ValidPokemonName))
-            .ReturnsAsync(GetTestPokemon());
+            .ReturnsAsync(GetValidTestPokemon());
 
         var controller = new PokemonController(mockLibrary.Object);
         
@@ -33,7 +31,7 @@ public class PokemonControllerTest
         var model = (PokemonResultViewModel) viewResult.ViewData.Model!;
         
         Assert.That(model.FoundPokemon, Is.Not.Null);
-        Assert.That(model.FoundPokemon.Name, Is.EqualTo(GetTestPokemon().Name));
+        Assert.That(model.FoundPokemon.Name, Is.EqualTo(GetValidTestPokemon().Name));
     }
     
     [Test]
@@ -51,13 +49,5 @@ public class PokemonControllerTest
         
         // Assert
         Assert.That(result, Is.TypeOf<NotFoundResult>());
-    }
-
-    private static Pokemon GetTestPokemon()
-    {
-        return new Pokemon
-        {
-            Name = ValidPokemonName
-        };
     }
 }
