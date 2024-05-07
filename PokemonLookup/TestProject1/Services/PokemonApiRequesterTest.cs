@@ -34,7 +34,8 @@ public class PokemonApiRequesterTest
         {
             Name = PokemonName,
             Id = 1,
-            Weight = 2
+            Weight = 2,
+            Height = 3
         };
     }
 }
