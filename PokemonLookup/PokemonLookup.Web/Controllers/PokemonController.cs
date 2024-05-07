@@ -10,19 +10,25 @@ public class PokemonController(IPokemonLibrary library) : Controller
     [HttpGet]
     public async Task<IActionResult> Index(string name)
     {
+        PokemonResultViewModel result;
         try
         {
             var apiResult = await library.FetchPokemon(name);
-            var result = new PokemonResultViewModel
-            {
-                FoundPokemon = apiResult
-            };
-
-            return View(result);
+            result = new PokemonResultViewModel(apiResult);
+        }
+        catch (InvalidUserInputException ex)
+        {
+            result = new PokemonResultViewModel(ex.Message);
         }
         catch (ApiRequestFailedException requestFailedException) when(requestFailedException.ErrorCode == 404)
         {
-            return NotFound();
+            result = new PokemonResultViewModel($"Pokemon `{name}` was not found.");
+        }
+        catch (ApiRequestFailedException requestFailedException)
+        {
+            result = new PokemonResultViewModel(requestFailedException.Message);
         } 
+        
+        return View(result);
     }
 }

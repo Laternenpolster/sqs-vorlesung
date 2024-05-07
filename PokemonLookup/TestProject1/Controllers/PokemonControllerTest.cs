@@ -29,8 +29,11 @@ public class PokemonControllerTest
         Assert.That(result, Is.TypeOf<ViewResult>());
         var viewResult = (ViewResult) result;
         var model = (PokemonResultViewModel) viewResult.ViewData.Model!;
-        
-        Assert.That(model.FoundPokemon, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(model.FoundPokemon, Is.Not.Null);
+            Assert.That(model.PreviewImage, Is.Not.Null);
+        });
         Assert.That(model.FoundPokemon.Name, Is.EqualTo(GetValidTestPokemon().Name));
     }
     
@@ -48,6 +51,70 @@ public class PokemonControllerTest
         var result = await controller.Index(InvalidPokemonName);
         
         // Assert
-        Assert.That(result, Is.TypeOf<NotFoundResult>());
+        Assert.That(result, Is.TypeOf<ViewResult>());
+        var viewResult = (ViewResult) result;
+        var model = (PokemonResultViewModel) viewResult.ViewData.Model!;
+        Assert.Multiple(() =>
+        {
+            Assert.That(model.FoundPokemon, Is.Null);
+            Assert.That(model.PreviewImage, Is.Null);
+            Assert.That(model.Error, Is.EqualTo($"Pokemon `{InvalidPokemonName}` was not found."));
+        });
+    }
+    
+    [Test]
+    public async Task TestControllerWithInvalidInput()
+    {
+        // Arrange
+        var exception = new InvalidUserInputException(InvalidPokemonName);
+        
+        var mockLibrary = new Mock<IPokemonLibrary>();
+        mockLibrary.Setup(service => service.FetchPokemon(InvalidPokemonName))
+            .Throws(exception);
+
+        var controller = new PokemonController(mockLibrary.Object);
+        
+        // Act
+        var result = await controller.Index(InvalidPokemonName);
+        
+        // Assert
+        Assert.That(result, Is.TypeOf<ViewResult>());
+        var viewResult = (ViewResult) result;
+        var model = (PokemonResultViewModel) viewResult.ViewData.Model!;
+        Assert.Multiple(() =>
+        {
+            Assert.That(model.FoundPokemon, Is.Null);
+            Assert.That(model.PreviewImage, Is.Null);
+            Assert.That(model.Error, Is.Not.Null);
+            Assert.That(model.Error, Is.EqualTo(exception.Message));
+        });
+    }
+    
+    [Test]
+    public async Task TestControllerWithHttpRequestException()
+    {
+        // Arrange
+        var exception = new ApiRequestFailedException(null!, 401);
+        
+        var mockLibrary = new Mock<IPokemonLibrary>();
+        mockLibrary.Setup(service => service.FetchPokemon(InvalidPokemonName))
+            .Throws(exception);
+
+        var controller = new PokemonController(mockLibrary.Object);
+        
+        // Act
+        var result = await controller.Index(InvalidPokemonName);
+        
+        // Assert
+        Assert.That(result, Is.TypeOf<ViewResult>());
+        var viewResult = (ViewResult) result;
+        var model = (PokemonResultViewModel) viewResult.ViewData.Model!;
+        Assert.Multiple(() =>
+        {
+            Assert.That(model.FoundPokemon, Is.Null);
+            Assert.That(model.PreviewImage, Is.Null);
+            Assert.That(model.Error, Is.Not.Null);
+            Assert.That(model.Error, Is.EqualTo(exception.Message));
+        });
     }
 }

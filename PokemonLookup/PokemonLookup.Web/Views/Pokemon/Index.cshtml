@@ -3,6 +3,35 @@
     ViewData["Title"] = "Search result";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@Model.FoundPokemon!.Name</h1>
-</div>
+@if (Model.FoundPokemon != null)
+{
+    <div class="text-center">
+        <img src="@Model.PreviewImage" alt="Preview of found pokémon" height="100px" width="100px">
+        <h1 class="display-4">@Model.FoundPokemon.Name</h1>
+    </div>
+    
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>ID:</td>
+            <td>@Model.FoundPokemon.Id</td>
+        </tr>
+        <tr>
+            <td>Weight:</td>
+            <td>@Model.FoundPokemon.Weight</td>
+        </tr>
+        <tr>
+            <td>Height:</td>
+            <td>@Model.FoundPokemon.Height</td>
+        </tr>
+    </table>
+}
+else
+{
+    <h2>Error:</h2>
+    <p>@Model.Error</p>
+    <p>Please try again.</p>
+}
