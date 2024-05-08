@@ -4,9 +4,9 @@ using PokemonLookup.Web.Controllers;
 using PokemonLookup.Web.Exceptions;
 using PokemonLookup.Web.Models;
 using PokemonLookup.Web.Services;
-using static TestProject1.TestDataProvider;
+using static PokemonLookup.UnitTests.TestDataProvider;
 
-namespace TestProject1.Controllers;
+namespace PokemonLookup.UnitTests.Controllers;
 
 [TestFixture]
 [TestOf(typeof(PokemonController))]

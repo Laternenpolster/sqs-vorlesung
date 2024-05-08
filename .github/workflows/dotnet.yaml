@@ -41,7 +41,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --no-incremental PokemonLookup/PokemonLookup.sln
     - name: Ensure browsers are installed
-      run: pwsh PokemonLookup/TestProject1/bin/Debug/net8.0/playwright.ps1 install --with-deps
+      run: pwsh PokemonLookup/PokemonLookup.UnitTests/bin/Debug/net8.0/playwright.ps1 install --with-deps
     - name: Test
       run: dotnet test --no-build --verbosity normal PokemonLookup/PokemonLookup.sln
     - name: Coverage

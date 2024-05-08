@@ -2,7 +2,7 @@
 using PokemonLookup.Web.Models;
 using PokemonLookup.Web.Services;
 
-namespace TestProject1.Services;
+namespace PokemonLookup.UnitTests.Services;
 
 [TestFixture]
 [TestOf(typeof(PokemonApiRequester))]

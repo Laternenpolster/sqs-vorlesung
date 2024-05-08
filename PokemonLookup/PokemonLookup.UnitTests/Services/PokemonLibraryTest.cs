@@ -2,9 +2,9 @@ using Moq;
 using PokemonLookup.Web.Exceptions;
 using PokemonLookup.Web.Models;
 using PokemonLookup.Web.Services;
-using static TestProject1.TestDataProvider;
+using static PokemonLookup.UnitTests.TestDataProvider;
 
-namespace TestProject1.Services;
+namespace PokemonLookup.UnitTests.Services;
 
 [TestFixture]
 [TestOf(typeof(PokemonLibrary))]

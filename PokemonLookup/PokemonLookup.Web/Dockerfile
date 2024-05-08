@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["PokemonLookup.Web/PokemonLookup.Web.csproj", "PokemonLookup.Web/"]
 RUN dotnet restore "PokemonLookup.Web/PokemonLookup.Web.csproj"
 COPY ./PokemonLookup.Web ./PokemonLookup.Web
-COPY ./TestProject1 ./TestProject1
+COPY ./PokemonLookup.UnitTests ./PokemonLookup.UnitTests
 COPY ./PokemonLookup.sln ./PokemonLookup.sln
 WORKDIR "/src/PokemonLookup.Web"
 RUN dotnet build "PokemonLookup.Web.csproj" -c ${BUILD_CONFIGURATION} -o /app/build

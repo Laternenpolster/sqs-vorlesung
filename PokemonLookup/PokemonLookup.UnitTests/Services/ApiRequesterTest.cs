@@ -4,9 +4,9 @@ using PokemonLookup.Web.Models;
 using PokemonLookup.Web.Services;
 using RichardSzalay.MockHttp;
 using JsonSerializer = System.Text.Json.JsonSerializer;
-using static TestProject1.TestDataProvider;
+using static PokemonLookup.UnitTests.TestDataProvider;
 
-namespace TestProject1.Services;
+namespace PokemonLookup.UnitTests.Services;
 
 [TestFixture]
 [TestOf(typeof(ApiRequester))]

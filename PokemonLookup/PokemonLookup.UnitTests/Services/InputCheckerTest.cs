@@ -1,6 +1,6 @@
 using PokemonLookup.Web.Services;
 
-namespace TestProject1.Services;
+namespace PokemonLookup.UnitTests.Services;
 
 [TestFixture]
 [TestOf(typeof(InputChecker))]

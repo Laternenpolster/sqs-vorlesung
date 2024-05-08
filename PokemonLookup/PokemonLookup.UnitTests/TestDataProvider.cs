@@ -1,6 +1,6 @@
 ﻿using PokemonLookup.Web.Models;
 
-namespace TestProject1;
+namespace PokemonLookup.UnitTests;
 
 public static class TestDataProvider
 {

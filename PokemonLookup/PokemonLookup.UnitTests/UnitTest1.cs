@@ -1,4 +1,4 @@
-namespace TestProject1;
+namespace PokemonLookup.UnitTests;
 
 [Parallelizable(ParallelScope.Self)]
 [TestFixture]

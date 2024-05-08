@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PokemonLookup.Web.Controllers;
 using PokemonLookup.Web.Models;
 
-namespace TestProject1.Controllers;
+namespace PokemonLookup.UnitTests.Controllers;
 
 [TestFixture]
 [TestOf(typeof(HomeController))]
