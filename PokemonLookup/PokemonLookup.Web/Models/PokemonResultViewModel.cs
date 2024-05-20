@@ -1,3 +1,5 @@
+using PokemonLookup.Core.Entities;
+
 namespace PokemonLookup.Web.Models;
 
 public class PokemonResultViewModel

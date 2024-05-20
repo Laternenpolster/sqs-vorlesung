@@ -1,6 +1,6 @@
-﻿using PokemonLookup.Web.Models;
+﻿using PokemonLookup.Core.Entities;
 
-namespace PokemonLookup.Web.Services;
+namespace PokemonLookup.Core.Services;
 
 public interface IPokemonApiRequester
 {

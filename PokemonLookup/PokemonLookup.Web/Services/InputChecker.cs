@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using PokemonLookup.Core.Services;
 
 namespace PokemonLookup.Web.Services;
 

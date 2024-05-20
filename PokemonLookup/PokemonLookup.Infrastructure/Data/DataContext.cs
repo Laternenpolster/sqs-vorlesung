@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PokemonLookup.Core.Entities;
 
 namespace PokemonLookup.Web.Models;
 

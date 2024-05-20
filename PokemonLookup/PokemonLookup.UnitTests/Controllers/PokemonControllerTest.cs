@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
+using PokemonLookup.Core.Exceptions;
+using PokemonLookup.Core.Services;
 using PokemonLookup.Web.Controllers;
-using PokemonLookup.Web.Exceptions;
 using PokemonLookup.Web.Models;
-using PokemonLookup.Web.Services;
 using static PokemonLookup.UnitTests.TestDataProvider;
 
 namespace PokemonLookup.UnitTests.Controllers;

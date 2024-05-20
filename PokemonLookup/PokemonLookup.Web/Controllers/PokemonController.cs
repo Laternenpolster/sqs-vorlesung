@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using PokemonLookup.Web.Exceptions;
+using PokemonLookup.Core.Exceptions;
+using PokemonLookup.Core.Services;
 using PokemonLookup.Web.Models;
-using PokemonLookup.Web.Services;
 
 namespace PokemonLookup.Web.Controllers;
 

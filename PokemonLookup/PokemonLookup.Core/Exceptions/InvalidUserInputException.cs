@@ -1,3 +1,3 @@
-namespace PokemonLookup.Web.Exceptions;
+namespace PokemonLookup.Core.Exceptions;
 
 public class InvalidUserInputException(string msg) : Exception(msg);

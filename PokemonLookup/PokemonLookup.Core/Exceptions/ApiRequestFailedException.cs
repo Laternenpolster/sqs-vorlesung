@@ -1,4 +1,4 @@
-﻿namespace PokemonLookup.Web.Exceptions;
+﻿namespace PokemonLookup.Core.Exceptions;
 
 public class ApiRequestFailedException : Exception
 {

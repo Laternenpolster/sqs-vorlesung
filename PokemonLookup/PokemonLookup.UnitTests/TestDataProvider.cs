@@ -1,4 +1,4 @@
-﻿using PokemonLookup.Web.Models;
+﻿using PokemonLookup.Core.Entities;
 
 namespace PokemonLookup.UnitTests;
 

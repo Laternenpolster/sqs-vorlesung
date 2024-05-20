@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PokemonLookup.Web.Models;
+namespace PokemonLookup.Core.Entities;
 
 public class Pokemon
 {

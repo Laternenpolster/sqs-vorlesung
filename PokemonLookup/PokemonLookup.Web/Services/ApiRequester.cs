@@ -1,4 +1,5 @@
-﻿using PokemonLookup.Web.Exceptions;
+﻿using PokemonLookup.Core.Exceptions;
+using PokemonLookup.Core.Services;
 
 namespace PokemonLookup.Web.Services;
 

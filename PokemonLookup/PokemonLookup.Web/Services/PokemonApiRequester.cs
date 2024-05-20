@@ -1,4 +1,6 @@
-﻿using PokemonLookup.Web.Models;
+﻿using PokemonLookup.Core.Entities;
+using PokemonLookup.Core.Services;
+using PokemonLookup.Web.Models;
 
 namespace PokemonLookup.Web.Services;
 

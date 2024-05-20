@@ -1,4 +1,5 @@
 ﻿using Moq;
+using PokemonLookup.Core.Services;
 using PokemonLookup.Web.Models;
 using PokemonLookup.Web.Services;
 
