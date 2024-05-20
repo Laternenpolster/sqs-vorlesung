@@ -17,7 +17,7 @@ public class PokemonApiRequester(IApiRequester apiRequester) : IPokemonApiReques
         return new Pokemon
         {
             Name = result.Name,
-            Id = result.Id,
+            PokemonId = result.Id,
             Weight = result.Weight,
             Height = result.Height
         };

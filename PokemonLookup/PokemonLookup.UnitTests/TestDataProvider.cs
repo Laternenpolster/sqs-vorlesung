@@ -12,7 +12,7 @@ public static class TestDataProvider
         return new Pokemon
         {
             Name = ValidPokemonName,
-            Id = 1,
+            PokemonId = 1,
             Weight = 2,
             Height = 3
         };
