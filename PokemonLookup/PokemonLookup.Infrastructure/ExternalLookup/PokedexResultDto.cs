@@ -1,6 +1,6 @@
-﻿namespace PokemonLookup.Web.Models;
+﻿namespace PokemonLookup.Infrastructure.ExternalLookup;
 
-public class PokedexResult
+public class PokedexResultDto
 {
     public required int Id { get; set; }
     public required string Name { get; set; }

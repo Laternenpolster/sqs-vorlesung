@@ -1,7 +1,8 @@
-﻿using PokemonLookup.Core.Exceptions;
+﻿using System.Net.Http.Json;
+using PokemonLookup.Core.Exceptions;
 using PokemonLookup.Core.Services;
 
-namespace PokemonLookup.Web.Services;
+namespace PokemonLookup.Infrastructure.ExternalLookup;
 
 public class ApiRequester(HttpClient client) : IApiRequester
 {

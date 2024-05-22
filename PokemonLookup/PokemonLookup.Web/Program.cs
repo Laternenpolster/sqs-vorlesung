@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using PokemonLookup.Core.Services;
-using PokemonLookup.Web.Services;
+using PokemonLookup.Infrastructure;
+using PokemonLookup.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,11 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<IInputChecker, InputChecker>();
-builder.Services.AddScoped<ICachingService, CachingService>();
-builder.Services.AddSingleton<IApiRequester, ApiRequester>();
-builder.Services.AddSingleton<IPokemonApiRequester, PokemonApiRequester>();
-builder.Services.AddScoped<IPokemonLibrary, PokemonLibrary>();
+builder.Services.AddInfrastructureServices();
 
 // Build the connection string for the database
 var dbUser = Environment.GetEnvironmentVariable("DATABASE_USER");

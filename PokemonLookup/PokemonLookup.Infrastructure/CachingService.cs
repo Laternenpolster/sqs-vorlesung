@@ -1,7 +1,8 @@
 ﻿using PokemonLookup.Core.Entities;
 using PokemonLookup.Core.Services;
+using PokemonLookup.Infrastructure.Data;
 
-namespace PokemonLookup.Web.Services;
+namespace PokemonLookup.Infrastructure;
 
 public class CachingService(DataContext context) : ICachingService
 {

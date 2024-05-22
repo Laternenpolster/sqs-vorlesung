@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using PokemonLookup.Core.Entities;
 using PokemonLookup.Core.Exceptions;
-using PokemonLookup.Web.Services;
+using PokemonLookup.Infrastructure.ExternalLookup;
 using RichardSzalay.MockHttp;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using static PokemonLookup.UnitTests.TestDataProvider;

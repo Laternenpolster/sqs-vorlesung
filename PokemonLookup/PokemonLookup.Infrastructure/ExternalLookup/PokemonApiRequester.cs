@@ -1,8 +1,7 @@
 ﻿using PokemonLookup.Core.Entities;
 using PokemonLookup.Core.Services;
-using PokemonLookup.Web.Models;
 
-namespace PokemonLookup.Web.Services;
+namespace PokemonLookup.Infrastructure.ExternalLookup;
 
 public class PokemonApiRequester(IApiRequester apiRequester) : IPokemonApiRequester
 {
@@ -12,7 +11,7 @@ public class PokemonApiRequester(IApiRequester apiRequester) : IPokemonApiReques
     {
         var requestAddress = RequestBaseAddress + text;
         
-        var result = await apiRequester.GetRequest<PokedexResult>(requestAddress);
+        var result = await apiRequester.GetRequest<PokedexResultDto>(requestAddress);
         
         return new Pokemon
         {

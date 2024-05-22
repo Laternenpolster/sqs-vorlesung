@@ -2,7 +2,7 @@ using PokemonLookup.Core.Entities;
 using PokemonLookup.Core.Exceptions;
 using PokemonLookup.Core.Services;
 
-namespace PokemonLookup.Web.Services;
+namespace PokemonLookup.Infrastructure.ExternalLookup;
 
 public class PokemonLibrary : IPokemonLibrary
 {
