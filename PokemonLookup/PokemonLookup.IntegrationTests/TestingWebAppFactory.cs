@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using PokemonLookup.Infrastructure.Data;
 
 namespace PokemonLookup.IntegrationTests;
 
@@ -12,12 +13,12 @@ public class TestingWebAppFactory : WebApplicationFactory<Program>
             // Remove services
             var dbContextDescriptor = services.Single(
                 d => d.ServiceType ==
-                     typeof(DbContextOptions<DbContext>));
+                     typeof(DbContextOptions<DataContext>));
 
             services.Remove(dbContextDescriptor);
 
             // Add replacements
-            services.AddDbContext<DbContext>(options =>
+            services.AddDbContext<DataContext>(options =>
             {
                 options.UseInMemoryDatabase(nameof(TestingWebAppFactory));
             });
