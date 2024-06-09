@@ -2,7 +2,7 @@
 
 namespace PokemonLookup.Core.Entities;
 
-public class Pokemon
+public record Pokemon
 {
     [Key]
     [MaxLength(20)]
