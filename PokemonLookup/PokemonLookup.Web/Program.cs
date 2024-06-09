@@ -39,7 +39,10 @@ app.MapControllerRoute(
 
 // Check if the required database structure exists
 using var scope = app.Services.CreateScope();
-using var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
-dbContext.Database.EnsureCreated();
+await using var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+await dbContext.Database.EnsureCreatedAsync();
 
-app.Run();
+await app.RunAsync();
+
+// Needed for the IntegrationTest project to reference this project
+public partial class Program;
