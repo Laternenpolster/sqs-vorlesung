@@ -43,3 +43,6 @@ await using var dbContext = scope.ServiceProvider.GetRequiredService<DataContext
 await dbContext.Database.EnsureCreatedAsync();
 
 await app.RunAsync();
+
+// Needed for the IntegrationTest project to reference this project
+public partial class Program;

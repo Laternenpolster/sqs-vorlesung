@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using PokemonLookup.Core.Exceptions;
 using PokemonLookup.Core.Services;
@@ -10,25 +11,33 @@ public class PokemonController(IPokemonLibrary library) : Controller
     [HttpGet]
     public async Task<IActionResult> Index(string name)
     {
-        PokemonResultViewModel result;
+        PokemonResultViewModel viewModel;
+        HttpStatusCode resultStatus;
         try
         {
             var apiResult = await library.FetchPokemon(name);
-            result = new PokemonResultViewModel(apiResult);
+
+            viewModel = new PokemonResultViewModel(apiResult);
+            resultStatus = HttpStatusCode.OK;
         }
         catch (InvalidUserInputException ex)
         {
-            result = new PokemonResultViewModel(ex.Message);
+            viewModel = new PokemonResultViewModel(ex.Message);
+            resultStatus = HttpStatusCode.BadRequest;
         }
         catch (ApiRequestFailedException requestFailedException) when(requestFailedException.ErrorCode == 404)
         {
-            result = new PokemonResultViewModel($"Pokemon `{name}` was not found.");
+            viewModel = new PokemonResultViewModel($"Pokemon `{name}` was not found.");
+            resultStatus = HttpStatusCode.NotFound;
         }
         catch (ApiRequestFailedException requestFailedException)
         {
-            result = new PokemonResultViewModel(requestFailedException.Message);
-        } 
-        
-        return View(result);
+            viewModel = new PokemonResultViewModel(requestFailedException.Message);
+            resultStatus = HttpStatusCode.InternalServerError;
+        }
+
+        var result = View(viewModel);
+        result.StatusCode = (int) resultStatus;
+        return result;
     }
 }
