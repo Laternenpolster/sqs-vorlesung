@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using PokemonLookup.Core;
 using PokemonLookup.Core.Services;
 using PokemonLookup.Infrastructure.ExternalLookup;
 
