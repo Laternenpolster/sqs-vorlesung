@@ -14,14 +14,14 @@ public class HomeControllerTest
     {
         // Arrange
         var controller = new HomeController();
-        
+
         // Act
         var result = controller.Index();
-        
+
         // Assert
         Assert.That(result, Is.TypeOf<ViewResult>());
     }
-    
+
     [Test]
     public void TestErrorPage()
     {
@@ -31,13 +31,13 @@ public class HomeControllerTest
         {
             HttpContext = new DefaultHttpContext()
         };
-        
+
         // Act
         var result = controller.Error();
-        
+
         // Assert
         Assert.That(result, Is.TypeOf<ViewResult>());
-        
+
         var viewResult = (ViewResult) result;
         var model = (ErrorViewModel) viewResult.ViewData.Model!;
         Assert.Multiple(() =>

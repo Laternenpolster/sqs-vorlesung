@@ -28,18 +28,18 @@ public class PokemonLibraryTest
             .ReturnsAsync((Pokemon?) null);
         
         var library = new PokemonLibrary(mockInputChecker.Object, mockApiRequester.Object, mockCachingService.Object);
-        
+
         // Act
         var result = await library.FetchPokemon(ValidPokemonName);
-        
+
         // Assert
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
-        
+
         mockApiRequester.Verify(service => service.SearchByName(ValidPokemonName), Times.Exactly(1));
         mockCachingService.Verify(service => service.UpdateCache(result), Times.Exactly(1));
     }
-    
+
     [Test]
     public async Task TestValidItemPresentInCache()
     {
@@ -55,20 +55,20 @@ public class PokemonLibraryTest
         var mockCachingService = new Mock<ICachingService>();
         mockCachingService.Setup(service => service.GetItemFromCache(ValidPokemonName))
             .ReturnsAsync(GetValidTestPokemon());
-        
+
         var library = new PokemonLibrary(mockInputChecker.Object, mockApiRequester.Object, mockCachingService.Object);
-        
+
         // Act
         var result = await library.FetchPokemon(ValidPokemonName);
-        
+
         // Assert
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
-        
+
         mockApiRequester.Verify(service => service.SearchByName(ValidPokemonName), Times.Never);
         mockCachingService.Verify(service => service.UpdateCache(result), Times.Never);
     }
-    
+
     [Test]
     public async Task TestInvalidInputName()
     {
@@ -86,7 +86,7 @@ public class PokemonLibraryTest
             .ReturnsAsync((Pokemon?) null);
         
         var library = new PokemonLibrary(mockInputChecker.Object, mockApiRequester.Object, mockCachingService.Object);
-        
+
         // Act & Assert
         await Assert.ThatAsync(async () => await library.FetchPokemon(InvalidPokemonName), Throws.TypeOf<InvalidUserInputException>());
 

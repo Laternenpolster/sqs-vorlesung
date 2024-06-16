@@ -19,7 +19,7 @@ public class InputCheckerTest
             Assert.That(checker.IsUserInputValid("test"), Is.True);
         });
     }
-    
+
     [Test]
     public void TestInvalidInputs()
     {
@@ -36,7 +36,7 @@ public class InputCheckerTest
             Assert.That(checker.IsUserInputValid(":"), Is.False);
             Assert.That(checker.IsUserInputValid("/"), Is.False);
             Assert.That(checker.IsUserInputValid("\\"), Is.False);
-            
+
             // Complex cases
             Assert.That(checker.IsUserInputValid("test name"), Is.False);
             Assert.That(checker.IsUserInputValid("test.name"), Is.False);

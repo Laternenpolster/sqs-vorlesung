@@ -21,10 +21,10 @@ public class PokemonControllerTest
             .ReturnsAsync(GetValidTestPokemon());
 
         var controller = new PokemonController(mockLibrary.Object);
-        
+
         // Act
         var result = await controller.Index(ValidPokemonName);
-        
+
         // Assert
         Assert.That(result, Is.TypeOf<ViewResult>());
         var viewResult = (ViewResult) result;
@@ -36,7 +36,7 @@ public class PokemonControllerTest
         });
         Assert.That(model.FoundPokemon.Name, Is.EqualTo(GetValidTestPokemon().Name));
     }
-    
+
     [Test]
     public async Task TestControllerWithInvalidPokemon()
     {
@@ -46,10 +46,10 @@ public class PokemonControllerTest
             .Throws(() => new ApiRequestFailedException(null!, 404));
 
         var controller = new PokemonController(mockLibrary.Object);
-        
+
         // Act
         var result = await controller.Index(InvalidPokemonName);
-        
+
         // Assert
         Assert.That(result, Is.TypeOf<ViewResult>());
         var viewResult = (ViewResult) result;
@@ -61,22 +61,22 @@ public class PokemonControllerTest
             Assert.That(model.Error, Is.EqualTo($"Pokemon `{InvalidPokemonName}` was not found."));
         });
     }
-    
+
     [Test]
     public async Task TestControllerWithInvalidInput()
     {
         // Arrange
         var exception = new InvalidUserInputException(InvalidPokemonName);
-        
+
         var mockLibrary = new Mock<IPokemonLibrary>();
         mockLibrary.Setup(service => service.FetchPokemon(InvalidPokemonName))
             .Throws(exception);
 
         var controller = new PokemonController(mockLibrary.Object);
-        
+
         // Act
         var result = await controller.Index(InvalidPokemonName);
-        
+
         // Assert
         Assert.That(result, Is.TypeOf<ViewResult>());
         var viewResult = (ViewResult) result;
@@ -89,22 +89,22 @@ public class PokemonControllerTest
             Assert.That(model.Error, Is.EqualTo(exception.Message));
         });
     }
-    
+
     [Test]
     public async Task TestControllerWithHttpRequestException()
     {
         // Arrange
         var exception = new ApiRequestFailedException(null!, 401);
-        
+
         var mockLibrary = new Mock<IPokemonLibrary>();
         mockLibrary.Setup(service => service.FetchPokemon(InvalidPokemonName))
             .Throws(exception);
 
         var controller = new PokemonController(mockLibrary.Object);
-        
+
         // Act
         var result = await controller.Index(InvalidPokemonName);
-        
+
         // Assert
         Assert.That(result, Is.TypeOf<ViewResult>());
         var viewResult = (ViewResult) result;
