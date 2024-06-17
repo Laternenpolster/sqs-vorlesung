@@ -1,9 +1,9 @@
-﻿using System.Net;
+using System.Net;
+using System.Text.Json;
 using PokemonLookup.Core.Entities;
 using PokemonLookup.Core.Exceptions;
 using PokemonLookup.Infrastructure.ExternalLookup;
 using RichardSzalay.MockHttp;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 using static PokemonLookup.UnitTests.TestDataProvider;
 
 namespace PokemonLookup.UnitTests.Services;
@@ -40,7 +40,8 @@ public class ApiRequesterTest
     {
         // Arrange
         var mockHttp = new MockHttpMessageHandler();
-        mockHttp.When(TestUrl)
+        mockHttp
+            .When(TestUrl)
             .Respond(HttpStatusCode.NotFound);
 
         var httpClient = mockHttp.ToHttpClient();
@@ -65,7 +66,8 @@ public class ApiRequesterTest
     {
         // Arrange
         var mockHttp = new MockHttpMessageHandler();
-        mockHttp.When(TestUrl)
+        mockHttp
+            .When(TestUrl)
             .Respond(ContentType, string.Empty);
 
         var httpClient = mockHttp.ToHttpClient();

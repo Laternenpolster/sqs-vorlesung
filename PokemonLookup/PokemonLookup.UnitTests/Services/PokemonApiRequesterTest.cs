@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using PokemonLookup.Core.Services;
 using PokemonLookup.Infrastructure.ExternalLookup;
 
@@ -15,7 +15,8 @@ public class PokemonApiRequesterTest
     {
         // Arrange
         var mockApi = new Mock<IApiRequester>();
-        mockApi.Setup(service => service.GetRequest<PokedexResultDto>(It.IsAny<string>()))
+        mockApi
+            .Setup(service => service.GetRequest<PokedexResultDto>(It.IsAny<string>()))
             .ReturnsAsync(GetTestPokedexResult());
 
         var apiRequester = new PokemonApiRequester(mockApi.Object);

@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Json;
+using System.Net.Http.Json;
 using PokemonLookup.Core.Exceptions;
 using PokemonLookup.Core.Services;
 
@@ -6,7 +6,8 @@ namespace PokemonLookup.Infrastructure.ExternalLookup;
 
 public class ApiRequester(HttpClient client) : IApiRequester
 {
-    public async Task<T> GetRequest<T>(string url) where T : class
+    public async Task<T> GetRequest<T>(string url)
+        where T : class
     {
         try
         {

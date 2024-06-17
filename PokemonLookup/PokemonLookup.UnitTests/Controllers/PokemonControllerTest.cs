@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using PokemonLookup.Core.Exceptions;
 using PokemonLookup.Core.Services;
@@ -17,7 +17,8 @@ public class PokemonControllerTest
     {
         // Arrange
         var mockLibrary = new Mock<IPokemonLibrary>();
-        mockLibrary.Setup(service => service.FetchPokemon(ValidPokemonName))
+        mockLibrary
+            .Setup(service => service.FetchPokemon(ValidPokemonName))
             .ReturnsAsync(GetValidTestPokemon());
 
         var controller = new PokemonController(mockLibrary.Object);
@@ -27,8 +28,8 @@ public class PokemonControllerTest
 
         // Assert
         Assert.That(result, Is.TypeOf<ViewResult>());
-        var viewResult = (ViewResult) result;
-        var model = (PokemonResultViewModel) viewResult.ViewData.Model!;
+        var viewResult = (ViewResult)result;
+        var model = (PokemonResultViewModel)viewResult.ViewData.Model!;
         Assert.Multiple(() =>
         {
             Assert.That(model.FoundPokemon, Is.Not.Null);
@@ -42,7 +43,8 @@ public class PokemonControllerTest
     {
         // Arrange
         var mockLibrary = new Mock<IPokemonLibrary>();
-        mockLibrary.Setup(service => service.FetchPokemon(InvalidPokemonName))
+        mockLibrary
+            .Setup(service => service.FetchPokemon(InvalidPokemonName))
             .Throws(() => new ApiRequestFailedException(null!, 404));
 
         var controller = new PokemonController(mockLibrary.Object);
@@ -52,8 +54,8 @@ public class PokemonControllerTest
 
         // Assert
         Assert.That(result, Is.TypeOf<ViewResult>());
-        var viewResult = (ViewResult) result;
-        var model = (PokemonResultViewModel) viewResult.ViewData.Model!;
+        var viewResult = (ViewResult)result;
+        var model = (PokemonResultViewModel)viewResult.ViewData.Model!;
         Assert.Multiple(() =>
         {
             Assert.That(model.FoundPokemon, Is.Null);
@@ -69,7 +71,8 @@ public class PokemonControllerTest
         var exception = new InvalidUserInputException(InvalidPokemonName);
 
         var mockLibrary = new Mock<IPokemonLibrary>();
-        mockLibrary.Setup(service => service.FetchPokemon(InvalidPokemonName))
+        mockLibrary
+            .Setup(service => service.FetchPokemon(InvalidPokemonName))
             .Throws(exception);
 
         var controller = new PokemonController(mockLibrary.Object);
@@ -79,8 +82,8 @@ public class PokemonControllerTest
 
         // Assert
         Assert.That(result, Is.TypeOf<ViewResult>());
-        var viewResult = (ViewResult) result;
-        var model = (PokemonResultViewModel) viewResult.ViewData.Model!;
+        var viewResult = (ViewResult)result;
+        var model = (PokemonResultViewModel)viewResult.ViewData.Model!;
         Assert.Multiple(() =>
         {
             Assert.That(model.FoundPokemon, Is.Null);
@@ -97,7 +100,8 @@ public class PokemonControllerTest
         var exception = new ApiRequestFailedException(null!, 401);
 
         var mockLibrary = new Mock<IPokemonLibrary>();
-        mockLibrary.Setup(service => service.FetchPokemon(InvalidPokemonName))
+        mockLibrary
+            .Setup(service => service.FetchPokemon(InvalidPokemonName))
             .Throws(exception);
 
         var controller = new PokemonController(mockLibrary.Object);
@@ -107,8 +111,8 @@ public class PokemonControllerTest
 
         // Assert
         Assert.That(result, Is.TypeOf<ViewResult>());
-        var viewResult = (ViewResult) result;
-        var model = (PokemonResultViewModel) viewResult.ViewData.Model!;
+        var viewResult = (ViewResult)result;
+        var model = (PokemonResultViewModel)viewResult.ViewData.Model!;
         Assert.Multiple(() =>
         {
             Assert.That(model.FoundPokemon, Is.Null);

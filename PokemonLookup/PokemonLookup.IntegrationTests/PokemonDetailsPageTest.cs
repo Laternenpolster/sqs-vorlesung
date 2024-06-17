@@ -2,7 +2,8 @@ using System.Net;
 
 namespace PokemonLookup.IntegrationTests;
 
-public class PokemonDetailsPageTest(TestingWebAppFactory factory) : IClassFixture<TestingWebAppFactory>
+public class PokemonDetailsPageTest(TestingWebAppFactory factory)
+    : IClassFixture<TestingWebAppFactory>
 {
     [Fact]
     public async Task GetNewValidPokemon()

@@ -25,7 +25,8 @@ public class PokemonController(IPokemonLibrary library) : Controller
             viewModel = new PokemonResultViewModel(ex.Message);
             resultStatus = HttpStatusCode.BadRequest;
         }
-        catch (ApiRequestFailedException requestFailedException) when(requestFailedException.ErrorCode == 404)
+        catch (ApiRequestFailedException requestFailedException)
+            when (requestFailedException.ErrorCode == 404)
         {
             viewModel = new PokemonResultViewModel($"Pokemon `{name}` was not found.");
             resultStatus = HttpStatusCode.NotFound;
@@ -37,7 +38,7 @@ public class PokemonController(IPokemonLibrary library) : Controller
         }
 
         var result = View(viewModel);
-        result.StatusCode = (int) resultStatus;
+        result.StatusCode = (int)resultStatus;
         return result;
     }
 }
