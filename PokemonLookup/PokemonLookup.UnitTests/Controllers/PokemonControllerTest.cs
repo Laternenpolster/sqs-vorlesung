@@ -121,4 +121,18 @@ public class PokemonControllerTest
             Assert.That(model.Error, Is.EqualTo(exception.Message));
         });
     }
+
+    [Test]
+    public async Task TestInvalidModelState()
+    {
+        // Arrange
+        var controller = new PokemonController(null!);
+        controller.ModelState.TryAddModelError("test", "test");
+
+        // Act
+        var result = await controller.Index(ValidPokemonName);
+
+        // Assert
+        Assert.That(result, Is.TypeOf<BadRequestResult>());
+    }
 }
