@@ -48,4 +48,6 @@ await dbContext.Database.EnsureCreatedAsync();
 await app.RunAsync();
 
 // Needed for the IntegrationTest project to reference this project
+#pragma warning disable
 public partial class Program;
+#pragma warning restore
