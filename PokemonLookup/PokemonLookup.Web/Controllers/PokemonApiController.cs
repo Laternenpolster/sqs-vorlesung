@@ -21,13 +21,14 @@ public class PokemonApiController(IPokemonLibrary library) : ControllerBase
         {
             return BadRequest(ex.Message);
         }
-        catch (ApiRequestFailedException requestFailedException) when(requestFailedException.ErrorCode == 404)
+        catch (ApiRequestFailedException requestFailedException)
+            when (requestFailedException.ErrorCode == 404)
         {
             return NotFound($"Pokemon `{name}` was not found.");
         }
         catch (ApiRequestFailedException requestFailedException)
         {
             return StatusCode(500, requestFailedException.Message);
-        } 
+        }
     }
 }

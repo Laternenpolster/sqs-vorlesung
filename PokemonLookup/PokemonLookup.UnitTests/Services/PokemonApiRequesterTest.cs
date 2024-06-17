@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using PokemonLookup.Core.Services;
 using PokemonLookup.Infrastructure.ExternalLookup;
 
@@ -15,19 +15,20 @@ public class PokemonApiRequesterTest
     {
         // Arrange
         var mockApi = new Mock<IApiRequester>();
-        mockApi.Setup(service => service.GetRequest<PokedexResultDto>(It.IsAny<string>()))
+        mockApi
+            .Setup(service => service.GetRequest<PokedexResultDto>(It.IsAny<string>()))
             .ReturnsAsync(GetTestPokedexResult());
-        
+
         var apiRequester = new PokemonApiRequester(mockApi.Object);
-        
+
         // Act
         var result = await apiRequester.SearchByName(PokemonName);
-        
+
         // Assert
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Name, Is.EqualTo(GetTestPokedexResult().Name));
     }
-    
+
     private static PokedexResultDto GetTestPokedexResult()
     {
         return new PokedexResultDto

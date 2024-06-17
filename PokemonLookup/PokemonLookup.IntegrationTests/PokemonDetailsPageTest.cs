@@ -2,7 +2,8 @@ using System.Net;
 
 namespace PokemonLookup.IntegrationTests;
 
-public class PokemonDetailsPageTest(TestingWebAppFactory factory) : IClassFixture<TestingWebAppFactory>
+public class PokemonDetailsPageTest(TestingWebAppFactory factory)
+    : IClassFixture<TestingWebAppFactory>
 {
     [Fact]
     public async Task GetNewValidPokemon()
@@ -17,7 +18,7 @@ public class PokemonDetailsPageTest(TestingWebAppFactory factory) : IClassFixtur
         response.EnsureSuccessStatusCode(); // Status Code 200-299
         Assert.Equal("text/html; charset=utf-8", response.Content.Headers.ContentType!.ToString());
     }
-    
+
     [Fact]
     public async Task GetRepeatedValidPokemon()
     {
@@ -35,7 +36,7 @@ public class PokemonDetailsPageTest(TestingWebAppFactory factory) : IClassFixtur
         response.EnsureSuccessStatusCode(); // Status Code 200-299
         Assert.Equal("text/html; charset=utf-8", response.Content.Headers.ContentType!.ToString());
     }
-    
+
     [Fact]
     public async Task GetUnknownPokemon()
     {

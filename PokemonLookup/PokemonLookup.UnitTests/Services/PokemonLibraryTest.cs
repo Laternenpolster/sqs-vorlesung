@@ -16,77 +16,86 @@ public class PokemonLibraryTest
     {
         // Arrange
         var mockInputChecker = new Mock<IInputChecker>();
-        mockInputChecker.Setup(service => service.IsUserInputValid(ValidPokemonName))
+        mockInputChecker
+            .Setup(service => service.IsUserInputValid(ValidPokemonName))
             .Returns(true);
 
         var mockApiRequester = new Mock<IPokemonApiRequester>();
-        mockApiRequester.Setup(service => service.SearchByName(ValidPokemonName))
+        mockApiRequester
+            .Setup(service => service.SearchByName(ValidPokemonName))
             .ReturnsAsync(GetValidTestPokemon());
 
         var mockCachingService = new Mock<ICachingService>();
-        mockCachingService.Setup(service => service.GetItemFromCache(ValidPokemonName))
-            .ReturnsAsync((Pokemon?) null);
-        
+        mockCachingService
+            .Setup(service => service.GetItemFromCache(ValidPokemonName))
+            .ReturnsAsync((Pokemon?)null);
+
         var library = new PokemonLibrary(mockInputChecker.Object, mockApiRequester.Object, mockCachingService.Object);
-        
+
         // Act
         var result = await library.FetchPokemon(ValidPokemonName);
-        
+
         // Assert
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
-        
+
         mockApiRequester.Verify(service => service.SearchByName(ValidPokemonName), Times.Exactly(1));
         mockCachingService.Verify(service => service.UpdateCache(result), Times.Exactly(1));
     }
-    
+
     [Test]
     public async Task TestValidItemPresentInCache()
     {
         // Arrange
         var mockInputChecker = new Mock<IInputChecker>();
-        mockInputChecker.Setup(service => service.IsUserInputValid(ValidPokemonName))
+        mockInputChecker
+            .Setup(service => service.IsUserInputValid(ValidPokemonName))
             .Returns(true);
 
         var mockApiRequester = new Mock<IPokemonApiRequester>();
-        mockApiRequester.Setup(service => service.SearchByName(ValidPokemonName))
+        mockApiRequester
+            .Setup(service => service.SearchByName(ValidPokemonName))
             .ReturnsAsync(GetValidTestPokemon());
 
         var mockCachingService = new Mock<ICachingService>();
-        mockCachingService.Setup(service => service.GetItemFromCache(ValidPokemonName))
+        mockCachingService
+            .Setup(service => service.GetItemFromCache(ValidPokemonName))
             .ReturnsAsync(GetValidTestPokemon());
-        
+
         var library = new PokemonLibrary(mockInputChecker.Object, mockApiRequester.Object, mockCachingService.Object);
-        
+
         // Act
         var result = await library.FetchPokemon(ValidPokemonName);
-        
+
         // Assert
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
-        
+
         mockApiRequester.Verify(service => service.SearchByName(ValidPokemonName), Times.Never);
         mockCachingService.Verify(service => service.UpdateCache(result), Times.Never);
     }
-    
+
     [Test]
     public async Task TestInvalidInputName()
     {
         // Arrange
         var mockInputChecker = new Mock<IInputChecker>();
-        mockInputChecker.Setup(service => service.IsUserInputValid(InvalidPokemonName))
+        mockInputChecker
+            .Setup(service => service.IsUserInputValid(InvalidPokemonName))
             .Returns(false);
 
         var mockApiRequester = new Mock<IPokemonApiRequester>();
-        mockApiRequester.Setup(service => service.SearchByName(InvalidPokemonName))
+        mockApiRequester
+            .Setup(service => service.SearchByName(InvalidPokemonName))
             .ReturnsAsync(GetValidTestPokemon());
 
         var mockCachingService = new Mock<ICachingService>();
-        mockCachingService.Setup(service => service.GetItemFromCache(InvalidPokemonName))
-            .ReturnsAsync((Pokemon?) null);
-        
+        mockCachingService
+            .Setup(service => service.GetItemFromCache(InvalidPokemonName))
+            .ReturnsAsync((Pokemon?)null);
+
         var library = new PokemonLibrary(mockInputChecker.Object, mockApiRequester.Object, mockCachingService.Object);
-        
+
         // Act & Assert
         await Assert.ThatAsync(async () => await library.FetchPokemon(InvalidPokemonName), Throws.TypeOf<InvalidUserInputException>());
 

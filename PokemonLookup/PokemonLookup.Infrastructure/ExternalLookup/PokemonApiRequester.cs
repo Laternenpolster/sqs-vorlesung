@@ -10,9 +10,9 @@ public class PokemonApiRequester(IApiRequester apiRequester) : IPokemonApiReques
     public async Task<Pokemon> SearchByName(string text)
     {
         var requestAddress = RequestBaseAddress + text;
-        
+
         var result = await apiRequester.GetRequest<PokedexResultDto>(requestAddress);
-        
+
         return new Pokemon
         {
             Name = result.Name,

@@ -16,7 +16,10 @@ var dbPassword = Environment.GetEnvironmentVariable("DATABASE_PASSWORD");
 var dbDatabase = Environment.GetEnvironmentVariable("DATABASE_DB");
 
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseNpgsql($"Host=postgres;Username={dbUser};Password={dbPassword};Database={dbDatabase}"));
+    options.UseNpgsql(
+        $"Host=postgres;Username={dbUser};Password={dbPassword};Database={dbDatabase}"
+    )
+);
 
 var app = builder.Build();
 
@@ -45,4 +48,6 @@ await dbContext.Database.EnsureCreatedAsync();
 await app.RunAsync();
 
 // Needed for the IntegrationTest project to reference this project
+#pragma warning disable
 public partial class Program;
+#pragma warning restore

@@ -11,9 +11,9 @@ public class TestingWebAppFactory : WebApplicationFactory<Program>
         builder.ConfigureServices(services =>
         {
             // Remove services
-            var dbContextDescriptor = services.Single(
-                d => d.ServiceType ==
-                     typeof(DbContextOptions<DataContext>));
+            var dbContextDescriptor = services.Single(d =>
+                d.ServiceType == typeof(DbContextOptions<DataContext>)
+            );
 
             services.Remove(dbContextDescriptor);
 

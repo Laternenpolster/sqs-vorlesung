@@ -20,14 +20,14 @@ public class CachingServiceTest
         var cachingService = new CachingService(mockContext);
 
         var testPokemon = TestDataProvider.GetValidTestPokemon();
-        
+
         // Act
         var previouslyCachedPokemon = await cachingService.GetItemFromCache(testPokemon.Name);
-        
+
         await cachingService.UpdateCache(testPokemon);
 
         var newlyCachedPokemon = await cachingService.GetItemFromCache(testPokemon.Name);
-        
+
         // Assert
         Assert.Multiple(() =>
         {
