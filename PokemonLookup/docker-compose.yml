@@ -13,6 +13,8 @@
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_DB: ${DATABASE_DB}
+      DATABASE_SERVER: ${DATABASE_SERVER}
+      DATABASE_PORT: ${DATABASE_PORT}
   postgres:
     image: postgres:latest
     hostname: postgres

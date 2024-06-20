@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using PokemonLookup.Infrastructure.Data;
+using PokemonLookup.Web;
 
 namespace PokemonLookup.IntegrationTests;
 
