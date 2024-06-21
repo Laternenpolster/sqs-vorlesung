@@ -42,10 +42,16 @@ jobs:
       run: dotnet build --no-restore --no-incremental PokemonLookup/PokemonLookup.sln
     - name: Code Formatting
       run: dotnet format --verify-no-changes PokemonLookup
-#    - name: Ensure browsers are installed
-#      run: pwsh PokemonLookup/PokemonLookup.UnitTests/bin/Debug/net8.0/playwright.ps1 install --with-deps
-    - name: Test
-      run: dotnet test --no-build --verbosity normal PokemonLookup/PokemonLookup.sln
+    - name: Ensure browsers are installed
+      run: pwsh PokemonLookup/PokemonLookup.End2EndTests/bin/Debug/net8.0/playwright.ps1 install --with-deps
+    - name: Unit Test
+      run: dotnet test --no-build --verbosity normal PokemonLookup/PokemonLookup.UnitTests/PokemonLookup.UnitTests.csproj
+    - name: Architecture Test
+      run: dotnet test --no-build --verbosity normal PokemonLookup/PokemonLookup.ArchitectureTests/PokemonLookup.ArchitectureTests.csproj 
+    - name: Integration Test
+      run: dotnet test --no-build --verbosity normal PokemonLookup/PokemonLookup.IntegrationTests/PokemonLookup.IntegrationTests.csproj
+    - name: End2End Test
+      run: dotnet test --no-build --verbosity normal PokemonLookup/PokemonLookup.End2EndTests/PokemonLookup.End2EndTests.csproj
     - name: Coverage
       run: dotnet-coverage collect "dotnet test PokemonLookup/PokemonLookup.sln" -f xml -o "coverage.xml"
     - name: Sonarqube end
