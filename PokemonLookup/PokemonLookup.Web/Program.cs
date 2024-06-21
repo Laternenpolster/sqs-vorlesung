@@ -16,6 +16,9 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        // Load correct controllers when started from E2E test
+        builder.Services.AddMvc().AddApplicationPart(typeof(Program).Assembly);
+
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 

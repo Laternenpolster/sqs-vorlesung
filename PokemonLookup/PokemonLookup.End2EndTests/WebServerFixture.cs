@@ -71,6 +71,11 @@ public class WebServerFixture : IAsyncLifetime, IAsyncDisposable
 
     public async Task<IPage> NewPageAsync()
     {
-        return await _browser!.NewPageAsync();
+        var options = new BrowserNewPageOptions
+        {
+            BaseURL = _webApplication!.Urls.First()
+        };
+
+        return await _browser!.NewPageAsync(options);
     }
 }
