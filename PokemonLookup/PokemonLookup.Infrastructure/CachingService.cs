@@ -1,18 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using PokemonLookup.Core.Entities;
-using PokemonLookup.Core.Services;
+using PokemonLookup.Application.Services;
+using PokemonLookup.Domain.Entities;
 using PokemonLookup.Infrastructure.Data;
 
 namespace PokemonLookup.Infrastructure;
 
+/// <inheritdoc/>
 public class CachingService(DataContext context) : ICachingService
 {
+    /// <inheritdoc/>
     public async Task<Pokemon?> GetItemFromCache(string key)
     {
         return await context.Pokemons.FindAsync(key);
     }
 
+    /// <inheritdoc/>
     public async Task UpdateCache(Pokemon item)
     {
         try

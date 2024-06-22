@@ -5,10 +5,16 @@ using PokemonLookup.Web;
 
 namespace PokemonLookup.IntegrationTests;
 
+/// <summary>
+/// Set up the application with all dependencies once for all tests.
+/// The Postgres database of the Production environment is replaced with an In Memory database.
+/// </summary>
 public class TestingWebAppFactory : WebApplicationFactory<Program>
 {
+    /// <inheritdoc/>
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        // Change the services used in Production
         builder.ConfigureServices(services =>
         {
             // Remove services

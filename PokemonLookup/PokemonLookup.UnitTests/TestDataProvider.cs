@@ -1,12 +1,18 @@
-﻿using PokemonLookup.Core.Entities;
+﻿using PokemonLookup.Domain.Entities;
 
 namespace PokemonLookup.UnitTests;
 
+/// <summary>
+/// Provides static test data for all Unit Tests.
+/// </summary>
 public static class TestDataProvider
 {
     public const string ValidPokemonName = "abcdefg";
     public const string InvalidPokemonName = ";.-";
 
+    /// <summary>
+    /// Generate a new Pokémon.
+    /// </summary>
     public static Pokemon GetValidTestPokemon()
     {
         return new Pokemon

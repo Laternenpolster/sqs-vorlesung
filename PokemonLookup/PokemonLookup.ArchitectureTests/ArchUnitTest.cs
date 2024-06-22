@@ -12,24 +12,31 @@ namespace PokemonLookup.ArchitectureTests;
 /// </summary>
 public class ArchUnitTest
 {
-    private const string CoreAssemblyName = "PokemonLookup.Core";
+    private const string DomainAssemblyName = "PokemonLookup.Domain";
+    private const string ApplicationAssemblyName = "PokemonLookup.Application";
     private const string InfrastructureAssemblyName = "PokemonLookup.Infrastructure";
     private const string WebAssemblyName = "PokemonLookup.Web";
 
-    private static readonly Assembly CoreAssembly = Assembly.Load(CoreAssemblyName);
+    private static readonly Assembly DomainAssembly = Assembly.Load(DomainAssemblyName);
+    private static readonly Assembly ApplicationAssembly = Assembly.Load(ApplicationAssemblyName);
     private static readonly Assembly InfrastructureAssembly = Assembly.Load(InfrastructureAssemblyName);
     private static readonly Assembly WebAssembly = Assembly.Load(WebAssemblyName);
 
     // Architecture is loaded once for improved performance
     private static readonly Architecture Architecture = new ArchLoader()
-        .LoadAssemblies(CoreAssembly, InfrastructureAssembly, WebAssembly)
+        .LoadAssemblies(DomainAssembly, ApplicationAssembly, InfrastructureAssembly, WebAssembly)
         .Build();
 
-    // The 3 layers of the project
-    private readonly IObjectProvider<IType> _coreLayer = Types()
+    // The 4 layers of the project
+    private readonly IObjectProvider<IType> _domainLayer = Types()
         .That()
-        .ResideInAssembly(CoreAssembly)
-        .As("Core Layer");
+        .ResideInAssembly(DomainAssembly)
+        .As("Domain Layer");
+
+    private readonly IObjectProvider<IType> _applicationLayer = Types()
+        .That()
+        .ResideInAssembly(ApplicationAssembly)
+        .As("Application Layer");
 
     private readonly IObjectProvider<IType> _infrastructureLayer = Types()
         .That()
@@ -47,26 +54,47 @@ public class ArchUnitTest
     [Fact]
     public void CheckDependencies()
     {
-        // Core does not depend on Infrastructure
-        var coreToInfrastructureRule = Types()
+        // Domain does not depend on Infrastructure
+        var domainToApplicationRule = Types()
             .That()
-            .Are(_coreLayer)
+            .Are(_domainLayer)
+            .Should()
+            .NotDependOnAny(_applicationLayer);
+
+        // Domain does not depend on Infrastructure
+        var domainToInfrastructureRule = Types()
+            .That()
+            .Are(_domainLayer)
             .Should()
             .NotDependOnAny(_infrastructureLayer);
 
-        // Core does not depend on Web
-        var coreToWebRule = Types()
+        // Domain does not depend on Web
+        var domainToWebRule = Types()
             .That()
-            .Are(_coreLayer)
+            .Are(_domainLayer)
             .Should()
             .NotDependOnAny(_webLayer);
 
-        // Core does only depend on Core
-        var coreToCore = Types()
+        // Domain does only depend on Domain
+        var domainToDomain = Types()
             .That()
-            .Are(_coreLayer)
+            .Are(_domainLayer)
             .Should()
-            .OnlyDependOn(_coreLayer);
+            .OnlyDependOn(_domainLayer);
+
+        // Application does not depend on Infrastructure
+        var applicationToInfrastructureRule = Types()
+            .That()
+            .Are(_applicationLayer)
+            .Should()
+            .NotDependOnAny(_infrastructureLayer);
+
+        // Application does not depend on Web
+        var applicationToWebRule = Types()
+            .That()
+            .Are(_applicationLayer)
+            .Should()
+            .NotDependOnAny(_webLayer);
 
         // Infrastructure does not depend on Web
         var infrastructureToWebRule = Types()
@@ -76,25 +104,36 @@ public class ArchUnitTest
             .NotDependOnAny(_webLayer);
 
         // Check all rules
-        coreToInfrastructureRule.Check(Architecture);
-        coreToWebRule.Check(Architecture);
-        coreToCore.Check(Architecture);
+        domainToApplicationRule.Check(Architecture);
+        domainToInfrastructureRule.Check(Architecture);
+        domainToWebRule.Check(Architecture);
+        domainToDomain.Check(Architecture);
+
+        applicationToInfrastructureRule.Check(Architecture);
+        applicationToWebRule.Check(Architecture);
         infrastructureToWebRule.Check(Architecture);
     }
 
     /// <summary>
     /// Ensures that the types of each project have the right namespace.
-    /// E.g.: Core types have to be in the namespace "PokemonLookup.Core.*"
+    /// E.g.: Domain types have to be in the namespace "PokemonLookup.Domain.*"
     /// </summary>
     [Fact]
     public void CheckNamespaces()
     {
-        // Core classes should be in Core namespace
-        var coreRule = Types()
+        // Domain classes should be in Domain namespace
+        var domainRule = Types()
             .That()
-            .Are(_coreLayer)
+            .Are(_domainLayer)
             .Should()
-            .ResideInNamespace($"{CoreAssemblyName}.*", true);
+            .ResideInNamespace($"{DomainAssemblyName}.*", true);
+
+        // Application classes should be in Application namespace
+        var applicationRule = Types()
+            .That()
+            .Are(_applicationLayer)
+            .Should()
+            .ResideInNamespace($"{ApplicationAssemblyName}.*", true);
 
         // Infrastructure classes should be in Infrastructure namespace
         var infrastructureRule = Types()
@@ -115,7 +154,8 @@ public class ArchUnitTest
             .ResideInNamespace(""); // top-level implementation of Program.cs
 
         // Check all rules
-        coreRule.Check(Architecture);
+        domainRule.Check(Architecture);
+        applicationRule.Check(Architecture);
         infrastructureRule.Check(Architecture);
         webRule.Check(Architecture);
     }
@@ -149,15 +189,15 @@ public class ArchUnitTest
     [Fact]
     public void CheckClassTypes()
     {
-        // All interfaces have to be defined in Core
+        // All interfaces have to be defined in Application
         var interfaceRule = Interfaces()
             .Should()
-            .Be(_coreLayer);
+            .Be(_applicationLayer);
 
-        // Exceptions may be defined in Core.Exceptions
+        // Exceptions may be defined in Application.Exceptions
         var exceptionsRule = Classes()
             .That()
-            .ResideInNamespace(CoreAssemblyName + ".Exceptions")
+            .ResideInNamespace(ApplicationAssemblyName + ".Exceptions")
             .Should()
             .BeAssignableTo(typeof(Exception))
             .AndShould()

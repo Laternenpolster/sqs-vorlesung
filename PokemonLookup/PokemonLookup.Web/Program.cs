@@ -4,14 +4,23 @@ using PokemonLookup.Infrastructure.Data;
 
 namespace PokemonLookup.Web;
 
-// Needed for the IntegrationTest project to reference this project
+/// <summary>
+/// The entrypoint of the ASP.NET Web App.
+/// </summary>
 #pragma warning disable
-public class Program
+public class Program // Warning disabled, false positive. Needed for the IntegrationTest project to reference this project.
 #pragma warning restore
 {
+    /// <summary>
+    /// Configuration for E2E Tests
+    /// </summary>
     public static bool RunInBackground { get; set; }
     public static WebApplication? App { get; private set; }
 
+    /// <summary>
+    /// The entrypoint of the ASP.NET Web App.
+    /// </summary>
+    /// <param name="args">Launch arguments</param>
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -62,6 +71,7 @@ public class Program
         await using var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
         await dbContext.Database.EnsureCreatedAsync();
 
+        // If the app is launched from E2E Tests, it needs to run in the background
         if (RunInBackground)
         {
             await App.StartAsync();

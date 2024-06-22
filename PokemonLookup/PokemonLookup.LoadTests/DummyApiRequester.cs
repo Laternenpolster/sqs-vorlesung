@@ -1,5 +1,5 @@
-using PokemonLookup.Core.Entities;
-using PokemonLookup.Core.Services;
+using PokemonLookup.Application.Services;
+using PokemonLookup.Domain.Entities;
 
 namespace PokemonLookup.LoadTests;
 

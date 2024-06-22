@@ -5,11 +5,12 @@ using PokemonLookup.Web.Models;
 
 namespace PokemonLookup.UnitTests.Controllers;
 
-[TestFixture]
-[TestOf(typeof(HomeController))]
 public class HomeControllerTest
 {
-    [Test]
+    /// <summary>
+    /// Tests that the Home Page is displayed as a View.
+    /// </summary>
+    [Fact]
     public void TestHomePage()
     {
         // Arrange
@@ -19,10 +20,13 @@ public class HomeControllerTest
         var result = controller.Index();
 
         // Assert
-        Assert.That(result, Is.TypeOf<ViewResult>());
+        Assert.IsType<ViewResult>(result);
     }
 
-    [Test]
+    /// <summary>
+    /// Test that the error page is displayed as a View with all information.
+    /// </summary>
+    [Fact]
     public void TestErrorPage()
     {
         // Arrange
@@ -36,14 +40,12 @@ public class HomeControllerTest
         var result = controller.Error();
 
         // Assert
-        Assert.That(result, Is.TypeOf<ViewResult>());
+        Assert.IsType<ViewResult>(result);
 
         var viewResult = (ViewResult)result;
         var model = (ErrorViewModel)viewResult.ViewData.Model!;
-        Assert.Multiple(() =>
-        {
-            Assert.That(model.RequestId, Is.Not.Null);
-            Assert.That(model.ShowRequestId, Is.True);
-        });
+
+        Assert.NotNull(model.RequestId);
+        Assert.True(model.ShowRequestId);
     }
 }

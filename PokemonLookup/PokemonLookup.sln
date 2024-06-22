@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1CBF450D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonLookup.IntegrationTests", "PokemonLookup.IntegrationTests\PokemonLookup.IntegrationTests.csproj", "{34E3FAB6-582D-4788-8D21-15898D6FAADC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonLookup.Core", "PokemonLookup.Core\PokemonLookup.Core.csproj", "{E1B4494B-6CDB-42CA-9476-37F23012579E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonLookup.Application", "PokemonLookup.Application\PokemonLookup.Application.csproj", "{E1B4494B-6CDB-42CA-9476-37F23012579E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonLookup.Infrastructure", "PokemonLookup.Infrastructure\PokemonLookup.Infrastructure.csproj", "{F38264ED-9175-4FD6-A6E9-4145435C871A}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonLookup.ArchitectureTests", "PokemonLookup.ArchitectureTests\PokemonLookup.ArchitectureTests.csproj", "{ADF00BBD-1348-46CA-B106-A48EED886FA7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonLookup.End2EndTests", "PokemonLookup.End2EndTests\PokemonLookup.End2EndTests.csproj", "{B79717C8-CD39-4F08-8EFD-3300645518C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonLookup.Domain", "PokemonLookup.Domain\PokemonLookup.Domain.csproj", "{F6FCF61A-8BC9-46D3-BE5B-427D2574B8E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{B79717C8-CD39-4F08-8EFD-3300645518C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B79717C8-CD39-4F08-8EFD-3300645518C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B79717C8-CD39-4F08-8EFD-3300645518C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6FCF61A-8BC9-46D3-BE5B-427D2574B8E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6FCF61A-8BC9-46D3-BE5B-427D2574B8E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6FCF61A-8BC9-46D3-BE5B-427D2574B8E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6FCF61A-8BC9-46D3-BE5B-427D2574B8E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{485E92D9-C425-4C99-AED3-965E27DACE42} = {F9CF191B-C540-4CEB-B5DF-824DFFCA75B9}
@@ -73,5 +79,6 @@ Global
 		{ADF00BBD-1348-46CA-B106-A48EED886FA7} = {1CBF450D-5CB4-4D0B-83C6-5B1C3385E39D}
 		{B79717C8-CD39-4F08-8EFD-3300645518C9} = {1CBF450D-5CB4-4D0B-83C6-5B1C3385E39D}
 		{6FDE5DDE-1B07-4E93-9CE6-2706B011CF95} = {1CBF450D-5CB4-4D0B-83C6-5B1C3385E39D}
+		{F6FCF61A-8BC9-46D3-BE5B-427D2574B8E6} = {F9CF191B-C540-4CEB-B5DF-824DFFCA75B9}
 	EndGlobalSection
 EndGlobal
