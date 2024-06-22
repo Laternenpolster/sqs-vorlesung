@@ -6,8 +6,22 @@ using PokemonLookup.Web.Models;
 
 namespace PokemonLookup.Web.Controllers;
 
+/// <summary>
+/// A simple page that displays information about a specific Pokémon.
+/// </summary>
+/// <param name="library">Logic how the Pokémon should be resolved</param>
 public class PokemonController(IPokemonLibrary library) : Controller
 {
+    /// <summary>
+    /// Show information about a Pokémon based on its name.
+    /// If the Pokémon is not found, an error message is displayed.
+    /// </summary>
+    /// <param name="name">The name of the Pokémon</param>
+    /// <returns>
+    /// 200 when the Pokémon was found.
+    /// 400 when the user input is invalid
+    /// 404 when it was not found in cache and the Pokédex.
+    /// </returns>
     [HttpGet]
     public async Task<IActionResult> Index(string name)
     {
