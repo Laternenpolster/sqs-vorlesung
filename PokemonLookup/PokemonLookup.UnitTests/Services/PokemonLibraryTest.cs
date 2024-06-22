@@ -10,15 +10,13 @@ namespace PokemonLookup.UnitTests.Services;
 /// <summary>
 /// Tests the logic that combines caching and Pokédex API lookups.
 /// </summary>
-[TestFixture]
-[TestOf(typeof(PokemonLibrary))]
 public class PokemonLibraryTest
 {
     /// <summary>
     /// Simulates a lookup for a Pokémon that was not cached.
     /// It should be requested from the Pokédex API and stored in the cache.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestValidItemNotInCache()
     {
         // Arrange
@@ -43,8 +41,8 @@ public class PokemonLibraryTest
         var result = await library.FetchPokemon(ValidPokemonName);
 
         // Assert
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
+        Assert.NotNull(result);
+        Assert.Equal(GetValidTestPokemon().Name, result.Name);
 
         mockApiRequester.Verify(service => service.SearchByName(ValidPokemonName), Times.Exactly(1));
         mockCachingService.Verify(service => service.UpdateCache(result), Times.Exactly(1));
@@ -54,7 +52,7 @@ public class PokemonLibraryTest
     /// Simulates a lookup for a Pokémon that is already cached.
     /// The Pokédex API should not be used, only the cache.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestValidItemPresentInCache()
     {
         // Arrange
@@ -79,8 +77,8 @@ public class PokemonLibraryTest
         var result = await library.FetchPokemon(ValidPokemonName);
 
         // Assert
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
+        Assert.NotNull(result);
+        Assert.Equal(GetValidTestPokemon().Name, result.Name);
 
         mockApiRequester.Verify(service => service.SearchByName(ValidPokemonName), Times.Never);
         mockCachingService.Verify(service => service.UpdateCache(result), Times.Never);
@@ -90,7 +88,7 @@ public class PokemonLibraryTest
     /// Simulate a lookup for a Pokémon with an invalid name.
     /// The service should throw a <see cref="InvalidUserInputException"/> and not access cache or API.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestInvalidInputName()
     {
         // Arrange
@@ -112,7 +110,7 @@ public class PokemonLibraryTest
         var library = new PokemonLibrary(mockInputChecker.Object, mockApiRequester.Object, mockCachingService.Object);
 
         // Act & Assert
-        await Assert.ThatAsync(async () => await library.FetchPokemon(InvalidPokemonName), Throws.TypeOf<InvalidUserInputException>());
+        await Assert.ThrowsAsync<InvalidUserInputException>(async () => await library.FetchPokemon(InvalidPokemonName));
 
         mockApiRequester.Verify(service => service.SearchByName(InvalidPokemonName), Times.Never);
         mockCachingService.Verify(service => service.UpdateCache(It.IsAny<Pokemon>()), Times.Never);

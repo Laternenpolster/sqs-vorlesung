@@ -7,14 +7,12 @@ namespace PokemonLookup.UnitTests.Services;
 /// <summary>
 /// Tests the Pokémon caching.
 /// </summary>
-[TestFixture]
-[TestOf(typeof(CachingService))]
 public class CachingServiceTest
 {
     /// <summary>
     /// Try to save a new Pokémon in the cache and check if it is present afterward.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestSaveNewPokemon()
     {
         // Arrange
@@ -35,11 +33,8 @@ public class CachingServiceTest
         var newlyCachedPokemon = await cachingService.GetItemFromCache(testPokemon.Name);
 
         // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.That(previouslyCachedPokemon, Is.Null);
-            Assert.That(newlyCachedPokemon, Is.Not.Null);
-            Assert.That(newlyCachedPokemon, Is.EqualTo(testPokemon));
-        });
+        Assert.Null(previouslyCachedPokemon);
+        Assert.NotNull(newlyCachedPokemon);
+        Assert.Equal(testPokemon, newlyCachedPokemon);
     }
 }

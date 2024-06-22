@@ -7,8 +7,6 @@ namespace PokemonLookup.UnitTests.Services;
 /// <summary>
 /// Test the service used to search the Pokédex.
 /// </summary>
-[TestFixture]
-[TestOf(typeof(PokemonApiRequester))]
 public class PokemonApiRequesterTest
 {
     private const string PokemonName = "abcdefg";
@@ -17,7 +15,7 @@ public class PokemonApiRequesterTest
     /// Simulate a valid request.
     /// The request should be successful and the result should match the query.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestValidRequest()
     {
         // Arrange
@@ -32,8 +30,8 @@ public class PokemonApiRequesterTest
         var result = await apiRequester.SearchByName(PokemonName);
 
         // Assert
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(GetTestPokedexResult().Name));
+        Assert.NotNull(result);
+        Assert.Equal(GetTestPokedexResult().Name, result.Name);
     }
 
     /// <summary>

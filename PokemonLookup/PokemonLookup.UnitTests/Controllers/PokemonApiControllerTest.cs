@@ -12,15 +12,13 @@ namespace PokemonLookup.UnitTests.Controllers;
 /// Tests the builtin Pokémon API.
 /// The website is tested in <see cref="PokemonController"/>.
 /// </summary>
-[TestFixture]
-[TestOf(typeof(PokemonApiController))]
 public class PokemonApiControllerTest
 {
     /// <summary>
     /// Tries to search an existing Pokémon with the builtin API.
     /// This should return the Pokémon with a 200 status code.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestControllerWithoutError()
     {
         // Arrange
@@ -35,19 +33,19 @@ public class PokemonApiControllerTest
         var result = await controller.GetByName(ValidPokemonName);
 
         // Assert
-        Assert.That(result, Is.TypeOf<OkObjectResult>());
+        Assert.IsType<OkObjectResult>(result);
         var viewResult = (OkObjectResult)result;
         var model = (Pokemon)viewResult.Value!;
 
-        Assert.That(model, Is.Not.Null);
-        Assert.That(model.Name, Is.EqualTo(GetValidTestPokemon().Name));
+        Assert.NotNull(model);
+        Assert.Equal(GetValidTestPokemon().Name, model.Name);
     }
 
     /// <summary>
     /// Tries to search a Pokémon that does not exist.
     /// A 404 result with a specific error message is expected.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestControllerWithInvalidPokemon()
     {
         // Arrange
@@ -64,19 +62,19 @@ public class PokemonApiControllerTest
         var result = await controller.GetByName(InvalidPokemonName);
 
         // Assert
-        Assert.That(result, Is.TypeOf<NotFoundObjectResult>());
+        Assert.IsType<NotFoundObjectResult>(result);
         var httpResult = (NotFoundObjectResult)result;
         var errorMessage = (string?)httpResult.Value;
 
         const string expectedError = $"Pokemon `{InvalidPokemonName}` was not found.";
-        Assert.That(errorMessage, Is.EqualTo(expectedError));
+        Assert.Equal(expectedError, errorMessage);
     }
 
     /// <summary>
     /// Simulates a request with an invalid Pokémon name.
     /// The API should return a 400 status code with an error message.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestControllerWithInvalidInput()
     {
         // Arrange
@@ -92,18 +90,18 @@ public class PokemonApiControllerTest
         var result = await controller.GetByName(InvalidPokemonName);
 
         // Assert
-        Assert.That(result, Is.TypeOf<BadRequestObjectResult>());
+        Assert.IsType<BadRequestObjectResult>(result);
         var httpResult = (BadRequestObjectResult)result;
         var errorMessage = (string?)httpResult.Value;
 
-        Assert.That(errorMessage, Is.EqualTo(exception.Message));
+        Assert.Equal(exception.Message, errorMessage);
     }
 
     /// <summary>
     /// This tests simulates an exception in the Pokédex Lookup.
     /// This should result in a 500 status code with a generic error message.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestControllerWithHttpRequestException()
     {
         // Arrange
@@ -119,13 +117,10 @@ public class PokemonApiControllerTest
         var result = await controller.GetByName(InvalidPokemonName);
 
         // Assert
-        Assert.That(result, Is.TypeOf<ObjectResult>());
+        Assert.IsType<ObjectResult>(result);
         var viewResult = (ObjectResult)result;
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(viewResult.StatusCode, Is.EqualTo(500));
-            Assert.That(viewResult.Value, Is.EqualTo(exception.Message));
-        });
+        Assert.Equal(500, viewResult.StatusCode);
+        Assert.Equal(exception.Message, viewResult.Value);
     }
 }

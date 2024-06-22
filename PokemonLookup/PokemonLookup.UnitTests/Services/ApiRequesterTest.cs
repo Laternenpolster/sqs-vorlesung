@@ -11,8 +11,6 @@ namespace PokemonLookup.UnitTests.Services;
 /// <summary>
 /// Test the generic REST API requester.
 /// </summary>
-[TestFixture]
-[TestOf(typeof(ApiRequester))]
 public class ApiRequesterTest
 {
     private const string TestUrl = "https://google.com";
@@ -21,7 +19,7 @@ public class ApiRequesterTest
     /// <summary>
     /// Simulate a request to an existing endpoint.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestValidRequest()
     {
         // Arrange
@@ -38,15 +36,15 @@ public class ApiRequesterTest
         var result = await apiRequester.GetRequest<Pokemon>(TestUrl);
 
         // Assert
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
+        Assert.NotNull(result);
+        Assert.Equal(GetValidTestPokemon().Name, result.Name);
     }
 
     /// <summary>
     /// Test the reaction to a 404 status code.
     /// The service should throw an <see cref="ApiRequestFailedException"/> with a status code.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestNotFoundException()
     {
         // Arrange
@@ -68,7 +66,7 @@ public class ApiRequesterTest
         }
         catch (ApiRequestFailedException exception)
         {
-            Assert.That(exception.ErrorCode, Is.EqualTo(404));
+            Assert.Equal(404, exception.ErrorCode);
         }
     }
 
@@ -76,7 +74,7 @@ public class ApiRequesterTest
     /// Simulate an error in the JSON deserialization.
     /// The service should throw an <see cref="ApiRequestFailedException"/> without a status code.
     /// </summary>
-    [Test]
+    [Fact]
     public async Task TestGenericException()
     {
         // Arrange
@@ -98,7 +96,7 @@ public class ApiRequesterTest
         }
         catch (ApiRequestFailedException exception)
         {
-            Assert.That(exception.ErrorCode, Is.EqualTo(-1));
+            Assert.Equal(-1, exception.ErrorCode);
         }
     }
 
