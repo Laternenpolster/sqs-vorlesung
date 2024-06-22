@@ -52,6 +52,8 @@ jobs:
       run: dotnet test --no-build --verbosity normal PokemonLookup/PokemonLookup.IntegrationTests/PokemonLookup.IntegrationTests.csproj
     - name: End2End Test
       run: dotnet test --no-build --verbosity normal PokemonLookup/PokemonLookup.End2EndTests/PokemonLookup.End2EndTests.csproj
+    - name: Load Test
+      run: dotnet test --no-build --verbosity normal PokemonLookup/PokemonLookup.LoadTests/PokemonLookup.LoadTests.csproj
     - name: Coverage
       run: dotnet-coverage collect "dotnet test PokemonLookup/PokemonLookup.sln" -f xml -o "coverage.xml"
     - name: Sonarqube end

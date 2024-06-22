@@ -9,6 +9,7 @@ namespace PokemonLookup.Web.Controllers;
 public class PokemonApiController(IPokemonLibrary library) : ControllerBase
 {
     [HttpGet]
+    [Route("{name}")]
     public async Task<IActionResult> GetByName(string name)
     {
         try
