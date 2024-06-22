@@ -2,6 +2,9 @@
 
 namespace PokemonLookup.Core.Entities;
 
+/// <summary>
+/// A Pokémon with a unique name.
+/// </summary>
 public class Pokemon
 {
     [Key]
