@@ -5,8 +5,16 @@ using PokemonLookup.Infrastructure.ExternalLookup;
 
 namespace PokemonLookup.Infrastructure;
 
+/// <summary>
+/// Initialize the application with all required dependencies.
+/// This can not only be used for ASP.NET Web Apps
+/// </summary>
 public static class InfrastructureServiceExtensions
 {
+    /// <summary>
+    /// Initialize the application with all required dependencies.
+    /// This can not only be used for ASP.NET Web Apps
+    /// </summary>
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
         services.AddSingleton<IInputChecker, InputChecker>();

@@ -6,13 +6,16 @@ using PokemonLookup.Infrastructure.Data;
 
 namespace PokemonLookup.Infrastructure;
 
+/// <inheritdoc/>
 public class CachingService(DataContext context) : ICachingService
 {
+    /// <inheritdoc/>
     public async Task<Pokemon?> GetItemFromCache(string key)
     {
         return await context.Pokemons.FindAsync(key);
     }
 
+    /// <inheritdoc/>
     public async Task UpdateCache(Pokemon item)
     {
         try
