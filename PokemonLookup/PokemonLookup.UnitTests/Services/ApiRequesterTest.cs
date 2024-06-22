@@ -8,6 +8,9 @@ using static PokemonLookup.UnitTests.TestDataProvider;
 
 namespace PokemonLookup.UnitTests.Services;
 
+/// <summary>
+/// Test the generic REST API requester.
+/// </summary>
 [TestFixture]
 [TestOf(typeof(ApiRequester))]
 public class ApiRequesterTest
@@ -15,12 +18,16 @@ public class ApiRequesterTest
     private const string TestUrl = "https://google.com";
     private const string ContentType = "application/json";
 
+    /// <summary>
+    /// Simulate a request to an existing endpoint.
+    /// </summary>
     [Test]
     public async Task TestValidRequest()
     {
         // Arrange
         var mockHttp = new MockHttpMessageHandler();
-        mockHttp.When(TestUrl)
+        mockHttp
+            .When(TestUrl)
             .Respond(ContentType, GetValidHttpResponse());
 
         var httpClient = mockHttp.ToHttpClient();
@@ -35,6 +42,10 @@ public class ApiRequesterTest
         Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
     }
 
+    /// <summary>
+    /// Test the reaction to a 404 status code.
+    /// The service should throw an <see cref="ApiRequestFailedException"/> with a status code.
+    /// </summary>
     [Test]
     public async Task TestNotFoundException()
     {
@@ -61,6 +72,10 @@ public class ApiRequesterTest
         }
     }
 
+    /// <summary>
+    /// Simulate an error in the JSON deserialization.
+    /// The service should throw an <see cref="ApiRequestFailedException"/> without a status code.
+    /// </summary>
     [Test]
     public async Task TestGenericException()
     {

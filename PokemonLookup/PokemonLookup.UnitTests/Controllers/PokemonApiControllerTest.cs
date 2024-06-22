@@ -8,10 +8,18 @@ using static PokemonLookup.UnitTests.TestDataProvider;
 
 namespace PokemonLookup.UnitTests.Controllers;
 
+/// <summary>
+/// Tests the builtin Pokémon API.
+/// The website is tested in <see cref="PokemonController"/>.
+/// </summary>
 [TestFixture]
 [TestOf(typeof(PokemonApiController))]
 public class PokemonApiControllerTest
 {
+    /// <summary>
+    /// Tries to search an existing Pokémon with the builtin API.
+    /// This should return the Pokémon with a 200 status code.
+    /// </summary>
     [Test]
     public async Task TestControllerWithoutError()
     {
@@ -35,6 +43,10 @@ public class PokemonApiControllerTest
         Assert.That(model.Name, Is.EqualTo(GetValidTestPokemon().Name));
     }
 
+    /// <summary>
+    /// Tries to search a Pokémon that does not exist.
+    /// A 404 result with a specific error message is expected.
+    /// </summary>
     [Test]
     public async Task TestControllerWithInvalidPokemon()
     {
@@ -60,6 +72,10 @@ public class PokemonApiControllerTest
         Assert.That(errorMessage, Is.EqualTo(expectedError));
     }
 
+    /// <summary>
+    /// Simulates a request with an invalid Pokémon name.
+    /// The API should return a 400 status code with an error message.
+    /// </summary>
     [Test]
     public async Task TestControllerWithInvalidInput()
     {
@@ -83,6 +99,10 @@ public class PokemonApiControllerTest
         Assert.That(errorMessage, Is.EqualTo(exception.Message));
     }
 
+    /// <summary>
+    /// This tests simulates an exception in the Pokédex Lookup.
+    /// This should result in a 500 status code with a generic error message.
+    /// </summary>
     [Test]
     public async Task TestControllerWithHttpRequestException()
     {

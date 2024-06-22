@@ -2,10 +2,16 @@ using PokemonLookup.Core;
 
 namespace PokemonLookup.UnitTests.Services;
 
+/// <summary>
+/// Check the user input filter.
+/// </summary>
 [TestFixture]
 [TestOf(typeof(InputChecker))]
 public class InputCheckerTest
 {
+    /// <summary>
+    /// Input with letters and numbers are allowed.
+    /// </summary>
     [Test]
     public void TestValidInputs()
     {
@@ -20,6 +26,9 @@ public class InputCheckerTest
         });
     }
 
+    /// <summary>
+    /// Special characters are not allowed.
+    /// </summary>
     [Test]
     public void TestInvalidInputs()
     {

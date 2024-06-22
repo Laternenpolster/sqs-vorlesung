@@ -9,6 +9,9 @@ namespace PokemonLookup.UnitTests.Controllers;
 [TestOf(typeof(HomeController))]
 public class HomeControllerTest
 {
+    /// <summary>
+    /// Tests that the Home Page is displayed as a View.
+    /// </summary>
     [Test]
     public void TestHomePage()
     {
@@ -22,6 +25,9 @@ public class HomeControllerTest
         Assert.That(result, Is.TypeOf<ViewResult>());
     }
 
+    /// <summary>
+    /// Test that the error page is displayed as a View with all information.
+    /// </summary>
     [Test]
     public void TestErrorPage()
     {

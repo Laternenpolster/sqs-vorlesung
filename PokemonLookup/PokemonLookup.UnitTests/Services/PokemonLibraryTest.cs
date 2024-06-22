@@ -7,10 +7,17 @@ using static PokemonLookup.UnitTests.TestDataProvider;
 
 namespace PokemonLookup.UnitTests.Services;
 
+/// <summary>
+/// Tests the logic that combines caching and Pokédex API lookups.
+/// </summary>
 [TestFixture]
 [TestOf(typeof(PokemonLibrary))]
 public class PokemonLibraryTest
 {
+    /// <summary>
+    /// Simulates a lookup for a Pokémon that was not cached.
+    /// It should be requested from the Pokédex API and stored in the cache.
+    /// </summary>
     [Test]
     public async Task TestValidItemNotInCache()
     {
@@ -43,6 +50,10 @@ public class PokemonLibraryTest
         mockCachingService.Verify(service => service.UpdateCache(result), Times.Exactly(1));
     }
 
+    /// <summary>
+    /// Simulates a lookup for a Pokémon that is already cached.
+    /// The Pokédex API should not be used, only the cache.
+    /// </summary>
     [Test]
     public async Task TestValidItemPresentInCache()
     {
@@ -75,6 +86,10 @@ public class PokemonLibraryTest
         mockCachingService.Verify(service => service.UpdateCache(result), Times.Never);
     }
 
+    /// <summary>
+    /// Simulate a lookup for a Pokémon with an invalid name.
+    /// The service should throw a <see cref="InvalidUserInputException"/> and not access cache or API.
+    /// </summary>
     [Test]
     public async Task TestInvalidInputName()
     {

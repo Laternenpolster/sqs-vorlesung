@@ -4,10 +4,16 @@ using PokemonLookup.Infrastructure.Data;
 
 namespace PokemonLookup.UnitTests.Services;
 
+/// <summary>
+/// Tests the Pokémon caching.
+/// </summary>
 [TestFixture]
 [TestOf(typeof(CachingService))]
 public class CachingServiceTest
 {
+    /// <summary>
+    /// Try to save a new Pokémon in the cache and check if it is present afterward.
+    /// </summary>
     [Test]
     public async Task TestSaveNewPokemon()
     {
