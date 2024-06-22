@@ -8,6 +8,10 @@ using Xunit;
 
 namespace PokemonLookup.LoadTests;
 
+/// <summary>
+/// Set up the application with all dependencies once for all tests.
+/// A Testcontainers Postgres database is used in combination with <see cref="DummyApiRequester"/>.
+/// </summary>
 public sealed class TestingWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     // Launch the Web App in Production Mode

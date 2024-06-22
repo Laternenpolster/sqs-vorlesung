@@ -3,6 +3,10 @@ using PokemonLookup.Core.Services;
 
 namespace PokemonLookup.LoadTests;
 
+/// <summary>
+/// An implementation of <see cref="IPokemonApiRequester"/> that only returns static data.
+/// This is used to not overload the upstream Pokédex API during load tests.
+/// </summary>
 public class DummyApiRequester : IPokemonApiRequester
 {
     private static readonly Pokemon Pikachu = new()
@@ -21,6 +25,7 @@ public class DummyApiRequester : IPokemonApiRequester
         Weight = 60
     };
 
+    /// <inheritdoc/>
     public Task<Pokemon> SearchByName(string text)
     {
         var pokemon = text == "pikachu" ? Pikachu : Ditto;

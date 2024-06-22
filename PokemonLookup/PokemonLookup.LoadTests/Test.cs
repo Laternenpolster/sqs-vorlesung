@@ -5,20 +5,31 @@ using Xunit;
 
 namespace PokemonLookup.LoadTests;
 
+/// <summary>
+/// Checks the performance of the whole app during high load.
+/// Postgres is used like in Production, the Pokédex API on the other hand is not used.
+/// </summary>
+/// <param name="factory">Used to set up the application dependencies</param>
 public class Test(TestingWebAppFactory factory)
     : IClassFixture<TestingWebAppFactory>
 {
+    // The test process is identical for every test
     private static readonly LoadSimulation[] LoadSimulations =
     [
-        Simulation.RampingInject(rate: 300,
+        Simulation.RampingInject(rate: 500,
             interval: TimeSpan.FromSeconds(1),
             during: TimeSpan.FromSeconds(30)),
-        Simulation.Inject(300,
+        Simulation.Inject(500,
             interval: TimeSpan.FromSeconds(1),
             during: TimeSpan.FromSeconds(60)
         )
     ];
 
+    /// <summary>
+    /// Tests the performance of the Pokémon Details Page and the builtin Pokémon API.
+    /// These are the only interesting targets, as no other pages depend on the database or upstream API.
+    /// The application has ~30 users, but the goal is to be able to handle 500 requests per second.
+    /// </summary>
     [Fact]
     public async Task TestPerformance()
     {
