@@ -1,6 +1,6 @@
-using PokemonLookup.Core.Entities;
+using PokemonLookup.Domain.Entities;
 
-namespace PokemonLookup.Core.Services;
+namespace PokemonLookup.Application.Services;
 
 /// <summary>
 /// Contains all the business logic for finding a Pokémon.

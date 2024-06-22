@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PokemonLookup.Core.Entities;
+using PokemonLookup.Domain.Entities;
 
 namespace PokemonLookup.Infrastructure.Data;
 

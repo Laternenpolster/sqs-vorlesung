@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using PokemonLookup.Core.Services;
+using PokemonLookup.Application.Services;
 
-namespace PokemonLookup.Core;
+namespace PokemonLookup.Application;
 
 /// <inheritdoc/>
 public partial class InputChecker : IInputChecker

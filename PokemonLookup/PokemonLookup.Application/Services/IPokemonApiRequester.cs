@@ -1,6 +1,6 @@
-﻿using PokemonLookup.Core.Entities;
+﻿using PokemonLookup.Domain.Entities;
 
-namespace PokemonLookup.Core.Services;
+namespace PokemonLookup.Application.Services;
 
 /// <summary>
 /// Requests a Pokémon from the Pokédex.

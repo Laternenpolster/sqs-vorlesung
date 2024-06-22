@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using PokemonLookup.Core.Services;
+using PokemonLookup.Application.Services;
 using PokemonLookup.Web;
 using Testcontainers.PostgreSql;
 using Xunit;

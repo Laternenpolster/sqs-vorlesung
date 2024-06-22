@@ -1,7 +1,7 @@
 using Moq;
-using PokemonLookup.Core.Entities;
-using PokemonLookup.Core.Exceptions;
-using PokemonLookup.Core.Services;
+using PokemonLookup.Application.Exceptions;
+using PokemonLookup.Application.Services;
+using PokemonLookup.Domain.Entities;
 using PokemonLookup.Infrastructure.ExternalLookup;
 using static PokemonLookup.UnitTests.TestDataProvider;
 

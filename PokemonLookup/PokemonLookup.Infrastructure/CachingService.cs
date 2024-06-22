@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using PokemonLookup.Core.Entities;
-using PokemonLookup.Core.Services;
+using PokemonLookup.Application.Services;
+using PokemonLookup.Domain.Entities;
 using PokemonLookup.Infrastructure.Data;
 
 namespace PokemonLookup.Infrastructure;

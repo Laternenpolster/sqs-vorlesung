@@ -1,5 +1,5 @@
 using Moq;
-using PokemonLookup.Core.Services;
+using PokemonLookup.Application.Services;
 using PokemonLookup.Infrastructure.ExternalLookup;
 
 namespace PokemonLookup.UnitTests.Services;

@@ -1,4 +1,4 @@
-namespace PokemonLookup.Core.Exceptions;
+namespace PokemonLookup.Application.Exceptions;
 
 /// <summary>
 /// A request to an API was not successful.

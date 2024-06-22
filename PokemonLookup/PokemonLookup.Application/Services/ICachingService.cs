@@ -1,6 +1,6 @@
-﻿using PokemonLookup.Core.Entities;
+﻿using PokemonLookup.Domain.Entities;
 
-namespace PokemonLookup.Core.Services;
+namespace PokemonLookup.Application.Services;
 
 /// <summary>
 /// Used to cache requested Pokémons after it was initially requested from the Pokédex API

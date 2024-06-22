@@ -1,4 +1,4 @@
-using PokemonLookup.Core.Entities;
+using PokemonLookup.Domain.Entities;
 using PokemonLookup.Web.Controllers;
 
 namespace PokemonLookup.Web.Models;

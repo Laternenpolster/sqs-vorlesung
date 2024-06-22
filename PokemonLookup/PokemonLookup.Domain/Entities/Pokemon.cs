@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PokemonLookup.Core.Entities;
+namespace PokemonLookup.Domain.Entities;
 
 /// <summary>
 /// A Pokémon with a unique name.

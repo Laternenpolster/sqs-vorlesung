@@ -1,6 +1,6 @@
 using System.Net.Http.Json;
-using PokemonLookup.Core.Exceptions;
-using PokemonLookup.Core.Services;
+using PokemonLookup.Application.Exceptions;
+using PokemonLookup.Application.Services;
 
 namespace PokemonLookup.Infrastructure.ExternalLookup;
 

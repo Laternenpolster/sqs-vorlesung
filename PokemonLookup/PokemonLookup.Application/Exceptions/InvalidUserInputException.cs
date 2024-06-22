@@ -1,4 +1,4 @@
-namespace PokemonLookup.Core.Exceptions;
+namespace PokemonLookup.Application.Exceptions;
 
 /// <summary>
 /// The user input did not meet the expectations or was blocked by the filter.

@@ -29,7 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\PokemonLookup.Core\PokemonLookup.Core.csproj"/>
+        <ProjectReference Include="..\PokemonLookup.Application\PokemonLookup.Application.csproj"/>
         <ProjectReference Include="..\PokemonLookup.Infrastructure\PokemonLookup.Infrastructure.csproj"/>
         <ProjectReference Include="..\PokemonLookup.Web\PokemonLookup.Web.csproj"/>
     </ItemGroup>

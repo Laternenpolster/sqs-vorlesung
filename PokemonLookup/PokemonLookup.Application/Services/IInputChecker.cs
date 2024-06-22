@@ -1,4 +1,4 @@
-﻿namespace PokemonLookup.Core.Services;
+﻿namespace PokemonLookup.Application.Services;
 
 /// <summary>
 /// Used to check user input before it is handed to another service.

@@ -1,6 +1,6 @@
-﻿using PokemonLookup.Core.Exceptions;
+﻿using PokemonLookup.Application.Exceptions;
 
-namespace PokemonLookup.Core.Services;
+namespace PokemonLookup.Application.Services;
 
 /// <summary>
 /// Used to communicate with any REST APIs.

@@ -1,4 +1,4 @@
-using PokemonLookup.Core;
+using PokemonLookup.Application;
 
 namespace PokemonLookup.UnitTests.Services;
 

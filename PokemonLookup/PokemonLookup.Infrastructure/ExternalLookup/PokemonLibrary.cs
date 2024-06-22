@@ -1,6 +1,6 @@
-using PokemonLookup.Core.Entities;
-using PokemonLookup.Core.Exceptions;
-using PokemonLookup.Core.Services;
+using PokemonLookup.Application.Exceptions;
+using PokemonLookup.Application.Services;
+using PokemonLookup.Domain.Entities;
 
 namespace PokemonLookup.Infrastructure.ExternalLookup;
 
