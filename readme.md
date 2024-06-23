@@ -27,16 +27,16 @@ Dokumentation eigener System verwenden Sie besser die *plain* Version.
 
 Bei der hier beschriebenen Software handelt es sich um eine ASP.NET Web-App, mit der Informationen zu beliebigen Pokémons abgerufen werden können. Die App wird von einer Gruppe an Pokémon-Spielern eingesetzt, diese besteht aus 30 Leuten. Die Spieler erwarten sich durch die App, ergänzend zum Spiel Informationen zu Pokémons einsehen zu können.
 
-Die Informationen werden von einer externen Pokédex REST-API abgerufen und in einer Postgres Datenbank gespeichert, wodurch die Anfragen auf die API reduziert werden sollen. Diese Komponenten werden in der Zukunft möglicherweise durch andere Anbieter ausgetauscht. Aus diesem Grund soll die Architektur der App dafür ausgelegt sein, dass einzelne Module möglichst leicht ausgetauscht werden können. Als Grundlage dient hierfür die "Clean Architecture" von Jason Taylor.
+Die Informationen werden von einer externen Pokédex REST-API abgerufen und in einer PostgreSQL Datenbank gespeichert, wodurch die Anfragen auf die API reduziert werden sollen. Diese Komponenten werden in der Zukunft möglicherweise durch andere Anbieter ausgetauscht. Aus diesem Grund soll die Architektur der App dafür ausgelegt sein, dass einzelne Module möglichst leicht ausgetauscht werden können. Als Grundlage dient hierfür die "Clean Architecture" von Jason Taylor.
 
-Das Ziel der Software ist darüber hinaus nicht, eine komplexe neue App zu entwickeln, sondern die Software Qualität möglichst gut abzusichern.
+Das Ziel der Software ist darüber hinaus nicht, eine komplexe neue App zu entwickeln, sondern die Software-Qualität möglichst gut abzusichern.
 
 ## Aufgabenstellung
 
 | Use-Case                | Beschreibung                                                                                                                                                                                                                                                                    | Stakeholder |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| 1. Abrufen über Website | Informationen zu einem bestimmten Pokemon sollen über die Website abgerufen werden. Dabei sucht der Spieler das Pokemon anhand seines Namens, den er auf der Startseite der Web-App eingibt. Existiert kein Pokemon mit diesem Namen, soll eine Fehlermeldung angezeigt werden. | Spieler     |
-| 2. Abrufen über API     | Informationen zu Pokemons können darüber hinaus auch durch eine integrierte REST-API abgerufen werden. Diese sucht ein Pokemon anhand seines Namens und liefert das Ergebnis als JSON kodiert zurück.                                                                           | Spieler     |
+| 1. Abrufen über Website | Informationen zu einem bestimmten Pokémon sollen über die Website abgerufen werden. Dabei sucht der Spieler das Pokémon anhand seines Namens, den er auf der Startseite der Web-App eingibt. Existiert kein Pokémon mit diesem Namen, soll eine Fehlermeldung angezeigt werden. | Spieler     |
+| 2. Abrufen über API     | Informationen zu Pokémons können darüber hinaus auch durch eine integrierte REST-API abgerufen werden. Diese sucht ein Pokémon anhand seines Namens und liefert das Ergebnis als JSON kodiert zurück.                                                                           | Spieler     |
 
 ## Qualitätsziele
 
@@ -46,7 +46,7 @@ Das Ziel der Software ist darüber hinaus nicht, eine komplexe neue App zu entwi
 | 2    | Funktionale Eignung | - Die App muss die Bedürfnisse / Anforderungen der Benutzer erfüllen.                                                                                                                                                                    | - Projekt wird auf mehreren Ebenen funktional getestet: Unit Tests, Integration Tests, E2E Tests. Letztere testen speziell zuvor definierte Use-Cases.<br>- Erreichte Coverage: 100%                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | 3    | Reliability         | - Die App soll auch bei deutlich höherer Last (500 statt 30 parallelen Anfragen) jede Anfrage ohne Fehler beantworten.                                                                                                                   | - Last Tests mit NBomber<br>- SonarCloud mit 0 Reliability Warnungen                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | 4    | Security            | - Der Code soll keine bekannten Sicherheitslücken aufweisen und neue automatisch erkennen.                                                                                                                                               | - Aqasecurity Trivy Vulnerability Scanner in GitHub Action<br>- CodeQL Scanner für C# und JS/TS<br>- SonarCloud mit 0 offenen Security Warnungen<br>- Regelmäßige Ausführung der Security-Pipelines, auch ohne Änderungen am Repo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| 5    | Usability           | - Die Funktionalität der UI soll automatisiert sichergestellt werden.<br>- Pokémons im Cache müssen innerhalb von 30ms aufgerufen werden können.                                                                                         | - Frontend Tests mit Playwright (E2E Tests)<br>- Schnelle durchschnittliche Ladezeiten für Pokemons im Cache (< 30ms) durch Last Tests sichergestellt, auch bei 500 parallelen Anfragen.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| 5    | Usability           | - Die Funktionalität der UI soll automatisiert sichergestellt werden.<br>- Pokémons im Cache müssen innerhalb von 30ms aufgerufen werden können.                                                                                         | - Frontend Tests mit Playwright (E2E Tests)<br>- Schnelle durchschnittliche Ladezeiten für Pokémons im Cache (< 30ms) durch Last Tests sichergestellt, auch bei 500 parallelen Anfragen.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
 ## Stakeholder
 
@@ -195,6 +195,7 @@ Die Zerlegung des Gesamtsystems orientiert sich an der Struktur von Clean Archit
 
 ## Ebene 1
 ![](https://jasontaylor.dev/wp-content/uploads/2020/01/Figure-01-2.png)
+
 Quelle: https://jasontaylor.dev/clean-architecture-getting-started/
 
 ### Whitebox Domain
@@ -308,9 +309,9 @@ Ausdrucksmöglichkeiten. Nutzen Sie beispielsweise:
 Siehe [Laufzeitsicht](https://docs.arc42.org/section-6/) in der
 online-Dokumentation (auf Englisch!).
 
-## Abrufen eines Pokemons ohne Existenz im Cache
+## Abrufen eines Pokémons ohne Existenz im Cache
 
-Ein Spieler ruft ein Pokemon über die Website der App ab, das bis jetzt nicht im Cache gespeichert war. Es muss von der Pokédex API abgerufen werden und im Cache gespeichert werden.
+Ein Spieler ruft ein Pokémon über die Website der App ab, das bis jetzt nicht im Cache gespeichert war. Es muss von der Pokédex API abgerufen werden und im Cache gespeichert werden.
 ![](images/AblaufNotCached.png)
 
 ASP.NET Controller ist im Diagramm eine Zusammenfassung aus verschiedenen Komponenten der Software. Die eigentliche Logik wird von mehreren Services ausgeführt, die die Business Logic trennen und eigene Fehler einführen.
@@ -329,13 +330,14 @@ Die Software wird in Form von Docker-Compose bereitgestellt und läuft auf einem
 
 Zum Start des Docker Compose Projekts müssen folgende Umgebungsvariablen konfiguriert sein:
 
-| Name              | Wert                                                           |
-| ----------------- | -------------------------------------------------------------- |
-| DATABASE_USER     | Postgres Benutzername, verwendet für den Cache                 |
-| DATABASE_PASSWORD | Postgres Passwort                                              |
-| DATABASE_DB       | Datenbank, die auf einem Postgres Server verwendet werden soll |
-| DATABASE_SERVER   | Hostname des Postgres Servers                                  |
-| DATABASE_PORT     | Port des Postgres Servers                                      |
+| Name              | Wert                                                             |
+| ----------------- |------------------------------------------------------------------|
+| DATABASE_USER     | PostgreSQL Benutzername, verwendet für den Cache                 |
+| DATABASE_PASSWORD | PostgreSQL Passwort                                              |
+| DATABASE_DB       | Datenbank, die auf einem PostgreSQL Server verwendet werden soll |
+| DATABASE_SERVER   | Hostname des PostgreSQL Servers                                  |
+| DATABASE_PORT     | Port des PostgreSQL Servers                                      |
+
 Anschließend kann das Projekt folgendermaßen gestartet werden:
 ```sh
 cd PokemonLookup
@@ -420,7 +422,7 @@ Alle Komponenten oder Änderungen in diesen müssen mindestens durch Unit Tests 
 
 # Architekturentscheidungen
 
-Die zentrale Architekturentscheidung ist Clean Architecture von Jason Taylor. Diese und weitere Entscheidungen werden bereits unter [Bausteinsicht](#Bausteinsicht) und [Querschnittliche Konzepte](#Querschnittliche Konzepte) beschrieben und werden deshalb hier nicht wiederholt.
+Die zentrale Architekturentscheidung ist Clean Architecture von Jason Taylor. Diese und weitere Entscheidungen werden bereits unter [Bausteinsicht](#Bausteinsicht) und [Querschnittliche Konzepte](#Querschnittliche-Konzepte) beschrieben und werden deshalb hier nicht wiederholt.
 
 # Qualitätsanforderungen
 
