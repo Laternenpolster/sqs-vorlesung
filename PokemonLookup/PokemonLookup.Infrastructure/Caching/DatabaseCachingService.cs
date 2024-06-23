@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Npgsql;
+﻿using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 using PokemonLookup.Application.Services;
 using PokemonLookup.Domain.Entities;
 using PokemonLookup.Infrastructure.Data;
 
-namespace PokemonLookup.Infrastructure;
+namespace PokemonLookup.Infrastructure.Caching;
 
 /// <inheritdoc/>
-public class CachingService(DataContext context) : ICachingService
+public class DatabaseCachingService(DataContext context) : ICachingService
 {
     /// <inheritdoc/>
     public async Task<Pokemon?> GetItemFromCache(string key)
@@ -24,7 +24,7 @@ public class CachingService(DataContext context) : ICachingService
 
             await context.SaveChangesAsync();
         }
-        catch (DbUpdateException ex) when (ex.InnerException is PostgresException { SqlState: "23505" })
+        catch (DbUpdateException ex) when (ex.InnerException is DbException { SqlState: "23505" })
         {
             // Happens when the same Pokémon is inserted concurrently.
             // As the Pokémon did already exist, ignore the failed insert
