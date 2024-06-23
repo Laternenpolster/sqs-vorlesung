@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PokemonLookup.Core.Entities;
+namespace PokemonLookup.Domain.Entities;
 
-public record Pokemon
+/// <summary>
+/// A Pokémon with a unique name.
+/// </summary>
+public class Pokemon
 {
     [Key]
     [MaxLength(20)]

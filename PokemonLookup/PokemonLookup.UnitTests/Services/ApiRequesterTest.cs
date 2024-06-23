@@ -1,90 +1,105 @@
-﻿using System.Net;
-using PokemonLookup.Core.Entities;
-using PokemonLookup.Core.Exceptions;
+using System.Net;
+using System.Text.Json;
+using PokemonLookup.Application.Exceptions;
+using PokemonLookup.Domain.Entities;
 using PokemonLookup.Infrastructure.ExternalLookup;
 using RichardSzalay.MockHttp;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 using static PokemonLookup.UnitTests.TestDataProvider;
 
 namespace PokemonLookup.UnitTests.Services;
 
-[TestFixture]
-[TestOf(typeof(ApiRequester))]
+/// <summary>
+/// Test the generic REST API requester.
+/// </summary>
 public class ApiRequesterTest
 {
     private const string TestUrl = "https://google.com";
     private const string ContentType = "application/json";
-    
-    [Test]
+
+    /// <summary>
+    /// Simulate a request to an existing endpoint.
+    /// </summary>
+    [Fact]
     public async Task TestValidRequest()
     {
         // Arrange
         var mockHttp = new MockHttpMessageHandler();
-        mockHttp.When(TestUrl)
+        mockHttp
+            .When(TestUrl)
             .Respond(ContentType, GetValidHttpResponse());
 
         var httpClient = mockHttp.ToHttpClient();
-        
+
         var apiRequester = new ApiRequester(httpClient);
-        
+
         // Act
         var result = await apiRequester.GetRequest<Pokemon>(TestUrl);
-        
+
         // Assert
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(GetValidTestPokemon().Name));
+        Assert.NotNull(result);
+        Assert.Equal(GetValidTestPokemon().Name, result.Name);
     }
-    
-    [Test]
+
+    /// <summary>
+    /// Test the reaction to a 404 status code.
+    /// The service should throw an <see cref="ApiRequestFailedException"/> with a status code.
+    /// </summary>
+    [Fact]
     public async Task TestNotFoundException()
     {
         // Arrange
         var mockHttp = new MockHttpMessageHandler();
-        mockHttp.When(TestUrl)
+        mockHttp
+            .When(TestUrl)
             .Respond(HttpStatusCode.NotFound);
-    
+
         var httpClient = mockHttp.ToHttpClient();
-        
+
         var apiRequester = new ApiRequester(httpClient);
-        
+
         // Act & Assert
         try
         {
             await apiRequester.GetRequest<Pokemon>(TestUrl);
-            
+
             Assert.Fail("Expected `ApiRequestFailedException` exception.");
         }
         catch (ApiRequestFailedException exception)
         {
-            Assert.That(exception.ErrorCode, Is.EqualTo(404));
+            Assert.Equal(404, exception.ErrorCode);
         }
     }
-    
-    [Test]
+
+    /// <summary>
+    /// Simulate an error in the JSON deserialization.
+    /// The service should throw an <see cref="ApiRequestFailedException"/> without a status code.
+    /// </summary>
+    [Fact]
     public async Task TestGenericException()
     {
         // Arrange
         var mockHttp = new MockHttpMessageHandler();
-        mockHttp.When(TestUrl)
+        mockHttp
+            .When(TestUrl)
             .Respond(ContentType, string.Empty);
-    
+
         var httpClient = mockHttp.ToHttpClient();
-        
+
         var apiRequester = new ApiRequester(httpClient);
-        
+
         // Act & Assert
         try
         {
             await apiRequester.GetRequest<Pokemon>(TestUrl);
-            
+
             Assert.Fail("Expected `ApiRequestFailedException` exception.");
         }
         catch (ApiRequestFailedException exception)
         {
-            Assert.That(exception.ErrorCode, Is.EqualTo(-1));
+            Assert.Equal(-1, exception.ErrorCode);
         }
     }
-    
+
     private static string GetValidHttpResponse()
     {
         var testObject = GetValidTestPokemon();

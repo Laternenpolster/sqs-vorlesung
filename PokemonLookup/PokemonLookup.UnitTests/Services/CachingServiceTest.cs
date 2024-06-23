@@ -4,11 +4,15 @@ using PokemonLookup.Infrastructure.Data;
 
 namespace PokemonLookup.UnitTests.Services;
 
-[TestFixture]
-[TestOf(typeof(CachingService))]
+/// <summary>
+/// Tests the Pokémon caching.
+/// </summary>
 public class CachingServiceTest
 {
-    [Test]
+    /// <summary>
+    /// Try to save a new Pokémon in the cache and check if it is present afterward.
+    /// </summary>
+    [Fact]
     public async Task TestSaveNewPokemon()
     {
         // Arrange
@@ -20,20 +24,17 @@ public class CachingServiceTest
         var cachingService = new CachingService(mockContext);
 
         var testPokemon = TestDataProvider.GetValidTestPokemon();
-        
+
         // Act
         var previouslyCachedPokemon = await cachingService.GetItemFromCache(testPokemon.Name);
-        
+
         await cachingService.UpdateCache(testPokemon);
 
         var newlyCachedPokemon = await cachingService.GetItemFromCache(testPokemon.Name);
-        
+
         // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.That(previouslyCachedPokemon, Is.Null);
-            Assert.That(newlyCachedPokemon, Is.Not.Null);
-            Assert.That(newlyCachedPokemon, Is.EqualTo(testPokemon));
-        });
+        Assert.Null(previouslyCachedPokemon);
+        Assert.NotNull(newlyCachedPokemon);
+        Assert.Equal(testPokemon, newlyCachedPokemon);
     }
 }

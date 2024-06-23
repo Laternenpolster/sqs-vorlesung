@@ -1,55 +1,58 @@
-using PokemonLookup.Core;
+using PokemonLookup.Application;
 
 namespace PokemonLookup.UnitTests.Services;
 
-[TestFixture]
-[TestOf(typeof(InputChecker))]
+/// <summary>
+/// Check the user input filter.
+/// </summary>
 public class InputCheckerTest
 {
-    [Test]
+    /// <summary>
+    /// Input with letters and numbers are allowed.
+    /// </summary>
+    [Fact]
     public void TestValidInputs()
     {
         var checker = new InputChecker();
-        Assert.Multiple(() =>
-        {
-            Assert.That(checker.IsUserInputValid("a"), Is.True);
-            Assert.That(checker.IsUserInputValid("A"), Is.True);
-            Assert.That(checker.IsUserInputValid("1"), Is.True);
-            Assert.That(checker.IsUserInputValid("ab0"), Is.True);
-            Assert.That(checker.IsUserInputValid("test"), Is.True);
-        });
+
+        Assert.True(checker.IsUserInputValid("a"));
+        Assert.True(checker.IsUserInputValid("A"));
+        Assert.True(checker.IsUserInputValid("1"));
+        Assert.True(checker.IsUserInputValid("ab0"));
+        Assert.True(checker.IsUserInputValid("test"));
     }
-    
-    [Test]
+
+    /// <summary>
+    /// Special characters are not allowed.
+    /// </summary>
+    [Fact]
     public void TestInvalidInputs()
     {
         var checker = new InputChecker();
-        Assert.Multiple(() =>
-        {
-            // Simple cases
-            Assert.That(checker.IsUserInputValid(""), Is.False);
-            Assert.That(checker.IsUserInputValid(" "), Is.False);
-            Assert.That(checker.IsUserInputValid("."), Is.False);
-            Assert.That(checker.IsUserInputValid("-"), Is.False);
-            Assert.That(checker.IsUserInputValid(";"), Is.False);
-            Assert.That(checker.IsUserInputValid("="), Is.False);
-            Assert.That(checker.IsUserInputValid(":"), Is.False);
-            Assert.That(checker.IsUserInputValid("/"), Is.False);
-            Assert.That(checker.IsUserInputValid("\\"), Is.False);
-            
-            // Complex cases
-            Assert.That(checker.IsUserInputValid("test name"), Is.False);
-            Assert.That(checker.IsUserInputValid("test.name"), Is.False);
-            Assert.That(checker.IsUserInputValid("test-name"), Is.False);
-            Assert.That(checker.IsUserInputValid("test;name"), Is.False);
-            Assert.That(checker.IsUserInputValid("test=name"), Is.False);
-            Assert.That(checker.IsUserInputValid("test:name"), Is.False);
-            Assert.That(checker.IsUserInputValid("test/name"), Is.False);
-            Assert.That(checker.IsUserInputValid("test\\name"), Is.False);
-            Assert.That(checker.IsUserInputValid(" testname"), Is.False);
-            Assert.That(checker.IsUserInputValid("testname "), Is.False);
-            Assert.That(checker.IsUserInputValid("test/../name"), Is.False);
-            Assert.That(checker.IsUserInputValid("../name"), Is.False);
-        });
+
+        // Simple cases
+        Assert.False(checker.IsUserInputValid(""));
+        Assert.False(checker.IsUserInputValid(" "));
+        Assert.False(checker.IsUserInputValid("."));
+        Assert.False(checker.IsUserInputValid("-"));
+        Assert.False(checker.IsUserInputValid(";"));
+        Assert.False(checker.IsUserInputValid("="));
+        Assert.False(checker.IsUserInputValid(":"));
+        Assert.False(checker.IsUserInputValid("/"));
+        Assert.False(checker.IsUserInputValid("\\"));
+
+        // Complex cases
+        Assert.False(checker.IsUserInputValid("test name"));
+        Assert.False(checker.IsUserInputValid("test.name"));
+        Assert.False(checker.IsUserInputValid("test-name"));
+        Assert.False(checker.IsUserInputValid("test;name"));
+        Assert.False(checker.IsUserInputValid("test=name"));
+        Assert.False(checker.IsUserInputValid("test:name"));
+        Assert.False(checker.IsUserInputValid("test/name"));
+        Assert.False(checker.IsUserInputValid("test\\name"));
+        Assert.False(checker.IsUserInputValid(" testname"));
+        Assert.False(checker.IsUserInputValid("testname "));
+        Assert.False(checker.IsUserInputValid("test/../name"));
+        Assert.False(checker.IsUserInputValid("../name"));
     }
 }

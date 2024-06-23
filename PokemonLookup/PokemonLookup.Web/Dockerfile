@@ -9,7 +9,8 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["PokemonLookup.Web/PokemonLookup.Web.csproj", "PokemonLookup.Web/"]
 RUN dotnet restore "PokemonLookup.Web/PokemonLookup.Web.csproj"
-COPY ./PokemonLookup.Core ./PokemonLookup.Core
+COPY ./PokemonLookup.Domain ./PokemonLookup.Domain
+COPY ./PokemonLookup.Application ./PokemonLookup.Application
 COPY ./PokemonLookup.Infrastructure ./PokemonLookup.Infrastructure
 COPY ./PokemonLookup.Web ./PokemonLookup.Web
 COPY ./PokemonLookup.sln ./PokemonLookup.sln
