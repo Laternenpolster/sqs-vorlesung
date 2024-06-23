@@ -58,42 +58,17 @@ Das Ziel der Software ist darüber hinaus nicht, eine komplexe neue App zu entwi
 
 # Randbedingungen
 
-<div class="formalpara-title">
+Die folgenden Anforderungen wurden mündlich im Rahmen der Vorlesung "Software Qualitätssicherung" festgelegt:
 
-**Inhalt**
-
-</div>
-
-Randbedingungen und Vorgaben, die ihre Freiheiten bezüglich Entwurf,
-Implementierung oder Ihres Entwicklungsprozesses einschränken. Diese
-Randbedingungen gelten manchmal organisations- oder firmenweit über die
-Grenzen einzelner Systeme hinweg.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Für eine tragfähige Architektur sollten Sie genau wissen, wo Ihre
-Freiheitsgrade bezüglich der Entwurfsentscheidungen liegen und wo Sie
-Randbedingungen beachten müssen. Sie können Randbedingungen vielleicht
-noch verhandeln, zunächst sind sie aber da.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Einfache Tabellen der Randbedingungen mit Erläuterungen. Bei Bedarf
-unterscheiden Sie technische, organisatorische und politische
-Randbedingungen oder übergreifende Konventionen (beispielsweise
-Programmier- oder Versionierungsrichtlinien, Dokumentations- oder
-Namenskonvention).
-
-Siehe [Randbedingungen](https://docs.arc42.org/section-2/) in der
-online-Dokumentation (auf Englisch!).
+| Name            | Beschreibung                                                         |
+| --------------- | -------------------------------------------------------------------- |
+| Frontend        | Die App muss sowohl ein Web-Frontend als auch eine REST-API anbieten |
+| Kontext         | Eine Datenbank und eine externe REST-API müssen angebunden werden    |
+| Tests           | Mindestens müssen Unit- und Integration Tests vorhanden sein         |
+| GitHub          | Code und Doku müssen vollständig auf GitHub abrufbar sein            |
+| Automatisierung | Tests müssen automatisiert mit GitHub Actions ausgeführt werden      |
+| Deployment      | Das Projekt kann über Docker installiert werden                      |
+| Code Qualität   | SonarCloud muss über GitHub Actions benutzt werden                   |
 
 # Kontextabgrenzung
 
@@ -178,93 +153,24 @@ Kommunikationsbeziehung, Eingabe, Ausgabe.
 
 ## Technischer Kontext
 
-<div class="formalpara-title">
+![[Kontext.png]]
 
-**Inhalt**
+Der Inhalt des gestrichelten Kastens wird im Rahmen dieses Projekts entwickelt. Weitere Informationen zu den Schnittstellen:
 
-</div>
-
-Technische Schnittstellen (Kanäle, Übertragungsmedien) zwischen dem
-System und seiner Umwelt. Zusätzlich eine Erklärung (*mapping*), welche
-fachlichen Ein- und Ausgaben über welche technischen Kanäle fließen.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Viele Stakeholder treffen Architekturentscheidungen auf Basis der
-technischen Schnittstellen des Systems zu seinem Kontext.
-
-Insbesondere bei der Entwicklung von Infrastruktur oder Hardware sind
-diese technischen Schnittstellen durchaus entscheidend.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Beispielsweise UML Deployment-Diagramme mit den Kanälen zu
-Nachbarsystemen, begleitet von einer Tabelle, die Kanäle auf
-Ein-/Ausgaben abbildet.
-
-**\<Diagramm oder Tabelle>**
-
-**\<optional: Erläuterung der externen technischen Schnittstellen>**
-
-**\<Mapping fachliche auf technische Schnittstellen>**
+|                                     | External Pokédex API                 | Pokémon Cache                               |
+| ----------------------------------- | ------------------------------------ | ------------------------------------------- |
+| Adresse                             | https://pokeapi.co                   | Lokal in Docker Compose. Hostname: postgres |
+| Endpunkt                            | /api/v2/pokemon/{name}               | -                                           |
+| Ausgetauschte Daten                 | PokedexResultDto.cs (Infrastructure) | Pokemon.cs (Domain)                         |
+| Verantwortliche Software-Komponente | IPokemonApiRequester.cs              | ICachingService.cs                          |
+| Verwendete Implementierung          | PokemonApiRequester.cs               | DatabaseCachingService.cs                   |
 
 # Lösungsstrategie
 
-<div class="formalpara-title">
-
-**Inhalt**
-
-</div>
-
-Kurzer Überblick über die grundlegenden Entscheidungen und
-Lösungsansätze, die Entwurf und Implementierung des Systems prägen.
-Hierzu gehören:
-
--   Technologieentscheidungen
-
--   Entscheidungen über die Top-Level-Zerlegung des Systems,
-    beispielsweise die Verwendung gesamthaft prägender Entwurfs- oder
-    Architekturmuster,
-
--   Entscheidungen zur Erreichung der wichtigsten Qualitätsanforderungen
-    sowie
-
--   relevante organisatorische Entscheidungen, beispielsweise für
-    bestimmte Entwicklungsprozesse oder Delegation bestimmter Aufgaben
-    an andere Stakeholder.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Diese wichtigen Entscheidungen bilden wesentliche „Eckpfeiler“ der
-Architektur. Von ihnen hängen viele weitere Entscheidungen oder
-Implementierungsregeln ab.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Fassen Sie die zentralen Entwurfsentscheidungen **kurz** zusammen.
-Motivieren Sie, ausgehend von Aufgabenstellung, Qualitätszielen und
-Randbedingungen, was Sie entschieden haben und warum Sie so entschieden
-haben. Vermeiden Sie redundante Beschreibungen und verweisen Sie eher
-auf weitere Ausführungen in Folgeabschnitten.
-
-Siehe [Lösungsstrategie](https://docs.arc42.org/section-4/) in der
-online-Dokumentation (auf Englisch!).
+- Als Programmiersprache wird C# in Kombination mit ASP.NET 8.0 verwendet. Diese ist dem Entwickler bereits bekannt und kann auch in allen Tests verwendet werden. Für alle Tests wird einheitlich xUnit verwendet, da es eine kompakte Schreibweise für Assertions verwendet.
+- Die Software wird in 9 C# Projekte unterteilt, die durch 1 Solution verbunden sind. Die Trennung entspricht der Clean Architecture von Jason Taylor. Im Mittelpunkt stehen dabei die Projekte "Domain", "Application", "Infrastructure" und "Web". Hierdurch wird eine gute Wartbarkeit und Erweiterbarkeit ermöglicht, auch bei deutlich größeren Projekten. Getestet werden die Regeln durch Architektur Tests und den Compiler selbst.
+- Um die Datenbank-Kommunikation robust zu machen und vor SQL-Injections zu schützen wird Entity-Framework verwendet. Selbst entwickelte SQL-Querys kommen nicht zum Einsatz.
+- Um eine korrekte Funktion der App zu gewährleisten, wird mit 5 verschiedenen Test-Projekten eine Coverage von insgesamt 100% erreicht.
 
 # Bausteinsicht
 
