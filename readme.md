@@ -151,12 +151,6 @@ Quelle: https://jasontaylor.dev/clean-architecture-getting-started/
 
 ## Ebene 2
 
-Beschreiben Sie den inneren Aufbau (einiger) Bausteine aus Ebene 2 als
-Whitebox.
-
-Bei tieferen Gliederungen der Architektur kopieren Sie diesen Teil von
-arc42 für die weiteren Ebenen.
-
 ### Whitebox Domain
 
 - **Entities**: Enthält Entities, die unternehmensweit Bedeutung haben. Ein Beispiel hierfür ist die Datenklasse Pokemon.cs
@@ -181,88 +175,17 @@ Die enthaltenen Komponenten werden nicht genauer erläutert, da es sich um Stand
 
 # Laufzeitsicht
 
-<div class="formalpara-title">
-
-**Inhalt**
-
-</div>
-
-Diese Sicht erklärt konkrete Abläufe und Beziehungen zwischen Bausteinen
-in Form von Szenarien aus den folgenden Bereichen:
-
--   Wichtige Abläufe oder *Features*: Wie führen die Bausteine der
-    Architektur die wichtigsten Abläufe durch?
-
--   Interaktionen an kritischen externen Schnittstellen: Wie arbeiten
-    Bausteine mit Nutzern und Nachbarsystemen zusammen?
-
--   Betrieb und Administration: Inbetriebnahme, Start, Stop.
-
--   Fehler- und Ausnahmeszenarien
-
-Anmerkung: Das Kriterium für die Auswahl der möglichen Szenarien (d.h.
-Abläufe) des Systems ist deren Architekturrelevanz. Es geht nicht darum,
-möglichst viele Abläufe darzustellen, sondern eine angemessene Auswahl
-zu dokumentieren.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Sie sollten verstehen, wie (Instanzen von) Bausteine(n) Ihres Systems
-ihre jeweiligen Aufgaben erfüllen und zur Laufzeit miteinander
-kommunizieren.
-
-Nutzen Sie diese Szenarien in der Dokumentation hauptsächlich für eine
-verständlichere Kommunikation mit denjenigen Stakeholdern, die die
-statischen Modelle (z.B. Bausteinsicht, Verteilungssicht) weniger
-verständlich finden.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Für die Beschreibung von Szenarien gibt es zahlreiche
-Ausdrucksmöglichkeiten. Nutzen Sie beispielsweise:
-
--   Nummerierte Schrittfolgen oder Aufzählungen in Umgangssprache
-
--   Aktivitäts- oder Flussdiagramme
-
--   Sequenzdiagramme
-
--   BPMN (Geschäftsprozessmodell und -notation) oder EPKs
-    (Ereignis-Prozessketten)
-
--   Zustandsautomaten
-
--   …
-
-Siehe [Laufzeitsicht](https://docs.arc42.org/section-6/) in der
-online-Dokumentation (auf Englisch!).
-
 ## Abrufen eines Pokémons ohne Existenz im Cache
 
 Ein Spieler ruft ein Pokémon über die Website der App ab, das bis jetzt nicht im Cache gespeichert war. Es muss von der Pokédex API abgerufen werden und im Cache gespeichert werden.
 ![](images/AblaufNotCached.png)
 
-ASP.NET Controller ist im Diagramm eine Zusammenfassung aus verschiedenen Komponenten der Software. Die eigentliche Logik wird von mehreren Services ausgeführt, die die Business Logic trennen und eigene Fehler einführen.
-
-## *\<Bezeichnung Laufzeitszenario 2>*
-
-…
-
-## *\<Bezeichnung Laufzeitszenario n>*
-
-…
+ASP.NET Controller ist im Diagramm eine Zusammenfassung aus verschiedenen Komponenten der Software, um das Diagramm übersichtlicher zu machen. Die eigentliche Logik wird von mehreren Services ausgeführt, die die Business Logic trennen und eigene Fehler einführen. Diese werden in [Bausteinsicht](#Bausteinsicht) erläutert.
 
 # Verteilungssicht
 
 Die Software wird in Form von Docker-Compose bereitgestellt und läuft auf einem einzelnen System. Dadurch ist die verwendete Hard- und Software auf dem Zielsystem nebensächlich.
+Außerdem wird die Zuverlässigkeit und Portabilität erhöht, da die Software isoliert läuft und durch Docker Compose die Verbindung zur Datenbank identisch bleibt.
 
 Zum Start des Docker Compose Projekts müssen folgende Umgebungsvariablen konfiguriert sein:
 
@@ -282,55 +205,6 @@ docker compose up
 
 ![](images/Verteilungssicht.png)
 
-## Infrastruktur Ebene 1
-
-An dieser Stelle beschreiben Sie (als Kombination von Diagrammen mit
-Tabellen oder Texten):
-
--   die Verteilung des Gesamtsystems auf mehrere Standorte, Umgebungen,
-    Rechner, Prozessoren o. Ä., sowie die physischen Verbindungskanäle
-    zwischen diesen,
-
--   wichtige Begründungen für diese Verteilungsstruktur,
-
--   Qualitäts- und/oder Leistungsmerkmale dieser Infrastruktur,
-
--   Zuordnung von Softwareartefakten zu Bestandteilen der Infrastruktur
-
-Für mehrere Umgebungen oder alternative Deployments kopieren Sie diesen
-Teil von arc42 für alle wichtigen Umgebungen/Varianten.
-
-***\<Übersichtsdiagramm>***
-
-Begründung  
-*\<Erläuternder Text>*
-
-Qualitäts- und/oder Leistungsmerkmale  
-*\<Erläuternder Text>*
-
-Zuordnung von Bausteinen zu Infrastruktur  
-*\<Beschreibung der Zuordnung>*
-
-## Infrastruktur Ebene 2
-
-An dieser Stelle können Sie den inneren Aufbau (einiger)
-Infrastrukturelemente aus Ebene 1 beschreiben.
-
-Für jedes Infrastrukturelement kopieren Sie die Struktur aus Ebene 1.
-
-### *\<Infrastrukturelement 1>*
-
-*\<Diagramm + Erläuterungen>*
-
-### *\<Infrastrukturelement 2>*
-
-*\<Diagramm + Erläuterungen>*
-
-…
-
-### *\<Infrastrukturelement n>*
-
-*\<Diagramm + Erläuterungen>*
 
 # Querschnittliche Konzepte
 
@@ -362,70 +236,29 @@ Die zentrale Architekturentscheidung ist Clean Architecture von Jason Taylor. Di
 
 # Qualitätsanforderungen
 
-<div class="formalpara-title">
-
-**Inhalt**
-
-</div>
-
-Dieser Abschnitt enthält möglichst alle Qualitätsanforderungen als
-Qualitätsbaum mit Szenarien. Die wichtigsten davon haben Sie bereits in
-Abschnitt 1.2 (Qualitätsziele) hervorgehoben.
-
-Nehmen Sie hier auch Qualitätsanforderungen geringerer Priorität auf,
-deren Nichteinhaltung oder -erreichung geringe Risiken birgt.
-
 ## Qualitätsbaum
 ![](images/Qualitätsbaum.png)
 
 ## Qualitätsszenarien
 
-<div class="formalpara-title">
+| Kriterium              | Szenario                                                                                                                                                                      | Typ      | Maßnahme                                                   |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ---------------------------------------------------------- |
+| Wartbarkeit            | Die Datenbank für den Cache soll auf MySQL geändert werden.                                                                                                                   | Änderung | Dependency Injection                                       |
+|                        | Ein neuer Entwickler fügt eine Abhängigkeit zu einer externen Library im Domain Projekt ein.                                                                                  | Änderung | Architektur Tests                                          |
+|                        | Ein neuer Entwickler möchte im Application Projekt auf eine Klasse aus Web zugreifen. Er fügt deshalb eine Referenz zu dem Projekt hinzu.                                     | Änderung | Zyklische Abhängigkeiten durch Compiler, Architektur Tests |
+|                        | Die App ist ein großer Erfolg und soll zukünftig auch als Handy App angeboten werden.                                                                                         | Änderung | Clean Architecture                                         |
+|                        | Ein neuer Entwickler soll Tests für die App entwickeln. Er kann jedoch nur C#.                                                                                                | Änderung | Einheitliche Sprache für Tests                             |
+|                        | Das Projekt wird nach längerer Pause weiterentwickelt. Alle Komponenten müssen neu entwickelt werden, da der Code nicht verstanden wird.                                      | Änderung | Code + Tests vollständig dokumentiert                      |
+|                        | Es arbeiten mehrere Entwickler am Projekt. Nach einigen Änderungen weist jede Klasse andere Coding Conventions auf. Die meisten entsprechen nicht dem Standard.               | Änderung | Code Style / Convention Test in Pipeline, SonarCloud       |
+| Funktionale Eignung    | Eine wichtige Komponente der App wurde optimiert. Wurde jeder Edge-Case berücksichtigt?                                                                                       | Änderung | Unit-, Integration-Tests                                   |
+|                        | Version 2.0.0 wird veröffentlicht. Entspricht die App noch allen Erwartungen?                                                                                                 | Änderung | Integration-, E2E-, Last-Test                              |
+| Zuverlässigkeit        | Die Beliebtheit der App ist deutlich größer als gedacht. Statt 30 parallelen Nutzern, benutzen 500 Spieler die App. Kann die App noch immer jede Anfrage korrekt beantworten? | Nutzung  | Last-Tests                                                 |
+|                        | Ein neuer Entwickler fügt eine schlecht programmierte Komponente hinzu, die Probleme verursacht. Die Änderung darf nicht auf main gelangen.                                   | Änderung | SonarCloud                                                 |
+| Sicherheit             | Eine neue Komponente hat eine Sicherheitslücke. Sie darf nicht auf main gelangen                                                                                              | Änderung | SonarCloud                                                 |
+|                        | Eine neue Sicherheitslücke wird bekannt, von der die App auch betroffen ist.                                                                                                  | Änderung | Trivy, CodeQL Scanner für C# und JS/TS                     |
+| Benutzerfreundlichkeit | Das System beantwortet Anfragen auf Pokémons im Cache durchschnittlich in unter 30ms.<br>Auch bei 500 parallelen Anfragen soll dieses Ziel erreicht werden                    | Nutzung  | Last-Tests                                                 |
+|                        | Nach einer Design-Änderung im Frontend kann die Website noch immer benutzt werden und liefert die korrekten Daten                                                             | Änderung | E2E-Test (Playwright)                                      |
 
-**Inhalt**
-
-</div>
-
-Konkretisierung der (in der Praxis oftmals vagen oder impliziten)
-Qualitätsanforderungen durch (Qualitäts-)Szenarien.
-
-Diese Szenarien beschreiben, was beim Eintreffen eines Stimulus auf ein
-System in bestimmten Situationen geschieht.
-
-Wesentlich sind zwei Arten von Szenarien:
-
--   Nutzungsszenarien (auch bekannt als Anwendungs- oder
-    Anwendungsfallszenarien) beschreiben, wie das System zur Laufzeit
-    auf einen bestimmten Auslöser reagieren soll. Hierunter fallen auch
-    Szenarien zur Beschreibung von Effizienz oder Performance. Beispiel:
-    Das System beantwortet eine Benutzeranfrage innerhalb einer Sekunde.
-
--   Änderungsszenarien beschreiben eine Modifikation des Systems oder
-    seiner unmittelbaren Umgebung. Beispiel: Eine zusätzliche
-    Funktionalität wird implementiert oder die Anforderung an ein
-    Qualitätsmerkmal ändert sich.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Szenarien operationalisieren Qualitätsanforderungen und machen deren
-Erfüllung mess- oder entscheidbar.
-
-Insbesondere wenn Sie die Qualität Ihrer Architektur mit Methoden wie
-ATAM überprüfen wollen, bedürfen die in Abschnitt 1.2 genannten
-Qualitätsziele einer weiteren Präzisierung bis auf die Ebene von
-diskutierbaren und nachprüfbaren Szenarien.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Entweder tabellarisch oder als Freitext.
 
 # Risiken und technische Schulden
 
