@@ -15,14 +15,6 @@ Template Version 8.2 DE. (basiert auf AsciiDoc Version), Januar 2023
 Created, maintained and © by Dr. Peter Hruschka, Dr. Gernot Starke and
 contributors. Siehe <https://arc42.org>.
 
-<div class="note">
-
-Diese Version des Templates enthält Hilfen und Erläuterungen. Sie dient
-der Einarbeitung in arc42 sowie dem Verständnis der Konzepte. Für die
-Dokumentation eigener System verwenden Sie besser die *plain* Version.
-
-</div>
-
 # Einführung und Ziele
 
 Bei der hier beschriebenen Software handelt es sich um eine ASP.NET Web-App, mit der Informationen zu beliebigen Pokémons abgerufen werden können. Die App wird von einer Gruppe an Pokémon-Spielern eingesetzt, diese besteht aus 30 Leuten. Die Spieler erwarten sich durch die App, ergänzend zum Spiel Informationen zu Pokémons einsehen zu können.
@@ -73,84 +65,28 @@ Die folgenden Anforderungen wurden mündlich im Rahmen der Vorlesung "Software Q
 
 # Kontextabgrenzung
 
-<div class="formalpara-title">
-
-**Inhalt**
-
-</div>
-
-Die Kontextabgrenzung grenzt das System gegen alle Kommunikationspartner
-(Nachbarsysteme und Benutzerrollen) ab. Sie legt damit die externen
-Schnittstellen fest und zeigt damit auch die Verantwortlichkeit (scope)
-Ihres Systems: Welche Verantwortung trägt das System und welche
-Verantwortung übernehmen die Nachbarsysteme?
-
-Differenzieren Sie fachlichen (Ein- und Ausgaben) und technischen
-Kontext (Kanäle, Protokolle, Hardware), falls nötig.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Die fachlichen und technischen Schnittstellen zur Kommunikation gehören
-zu den kritischsten Aspekten eines Systems. Stellen Sie sicher, dass Sie
-diese komplett verstanden haben.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Verschiedene Optionen:
-
--   Diverse Kontextdiagramme
-
--   Listen von Kommunikationsbeziehungen mit deren Schnittstellen
-
-Siehe [Kontextabgrenzung](https://docs.arc42.org/section-3/) in der
-online-Dokumentation (auf Englisch!).
-
 ## Fachlicher Kontext
 
-<div class="formalpara-title">
+![](images/KontextFachlich.png)
 
-**Inhalt**
+Übersicht, welche Daten über welche Schnittstelle kommuniziert werden:
 
-</div>
+| Sender              | Empfänger      | Daten                                                                                                                                                                                                                                                                                                      |
+| ------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pokémon Lookup      | Spieler        | Gefilterte Pokémon Eigenschaften. Im Rahmen dieser App sind nur die Informationen "Pokémon ID", "Name", "Weight" und "Height" relevant. Andere Daten werden nicht gespeichert.<br>Der Umfang und die Namen der Eigenschaften werden durch die App festgelegt und bleiben gleich, wenn sich die API ändert. |
+| Externe Pokédex API | Pokémon Lookup | Alle in der Pokédex API verfügbaren Pokémon Informationen.<br>Der Umfang und die Namen der Eigenschaften werden durch die API vorgegeben, die App hat keinen Einfluss darauf. Um die Daten in der App nutzen zu können, müssen sie erst in "gefilterte Daten" umgewandelt werden.                          |
+| Pokémon Lookup      | Pokémon Cache  | gefilterte Pokémon Eigenschaften.                                                                                                                                                                                                                                                                          |
 
-Festlegung **aller** Kommunikationsbeziehungen (Nutzer, IT-Systeme, …)
-mit Erklärung der fachlichen Ein- und Ausgabedaten oder Schnittstellen.
-Zusätzlich (bei Bedarf) fachliche Datenformate oder Protokolle der
-Kommunikation mit den Nachbarsystemen.
+Die Website und API des Pokémon Lookup Systems können folgendermaßen aufgerufen werden:
 
-<div class="formalpara-title">
+| Art     | Aufruf                                                                                                                                 |
+| ------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Website | 1. Navigation auf Startseite der App<br>2. Eingabe eines Suchbegriffs<br>3. Klick auf Suche<br>4. Details zum Pokémon werden angezeigt |
+| Website | Pokemon Informationen können direkt unter `/Pokemon?name={Dein Suchbegriff}` abgerufen werden.                                         |
+| API     | Pokemon Informationen können direkt unter `/api/v1/pokemon/{Dein Suchbegriff}` abgerufen werden.                                       |
 
-**Motivation**
 
-</div>
-
-Alle Beteiligten müssen verstehen, welche fachlichen Informationen mit
-der Umwelt ausgetauscht werden.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Alle Diagrammarten, die das System als Blackbox darstellen und die
-fachlichen Schnittstellen zu den Nachbarsystemen beschreiben.
-
-Alternativ oder ergänzend können Sie eine Tabelle verwenden. Der Titel
-gibt den Namen Ihres Systems wieder; die drei Spalten sind:
-Kommunikationsbeziehung, Eingabe, Ausgabe.
-
-**\<Diagramm und/oder Tabelle>**
-
-**\<optional: Erläuterung der externen fachlichen Schnittstellen>**
+Wie die jeweiligen Daten-Umfänge implementiert sind, wird im Folgenden beschrieben.
 
 ## Technischer Kontext
 
