@@ -439,51 +439,8 @@ Abschnitt 1.2 (Qualitätsziele) hervorgehoben.
 Nehmen Sie hier auch Qualitätsanforderungen geringerer Priorität auf,
 deren Nichteinhaltung oder -erreichung geringe Risiken birgt.
 
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Weil Qualitätsanforderungen die Architekturentscheidungen oft maßgeblich
-beeinflussen, sollten Sie die für Ihre Stakeholder relevanten
-Qualitätsanforderungen kennen, möglichst konkret und operationalisiert.
-
-<div class="formalpara-title">
-
-**Weiterführende Informationen**
-
-</div>
-
-Siehe [Qualitätsanforderungen](https://docs.arc42.org/section-10/) in
-der online-Dokumentation (auf Englisch!).
-
 ## Qualitätsbaum
-
-<div class="formalpara-title">
-
-**Inhalt**
-
-</div>
-
-Der Qualitätsbaum (à la ATAM) mit Qualitätsszenarien an den Blättern.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Die mit Prioritäten versehene Baumstruktur gibt Überblick über
-die — oftmals zahlreichen — Qualitätsanforderungen.
-
--   Baumartige Verfeinerung des Begriffes „Qualität“, mit „Qualität“
-    oder „Nützlichkeit“ als Wurzel.
-
--   Mindmap mit Qualitätsoberbegriffen als Hauptzweige
-
-In jedem Fall sollten Sie hier Verweise auf die Qualitätsszenarien des
-folgenden Abschnittes aufnehmen.
+![](images/Qualitätsbaum.png)
 
 ## Qualitätsszenarien
 
