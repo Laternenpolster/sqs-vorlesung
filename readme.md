@@ -24,146 +24,37 @@ Dokumentation eigener System verwenden Sie besser die *plain* Version.
 
 # Einführung und Ziele
 
-Beschreibt die wesentlichen Anforderungen und treibenden Kräfte, die bei
-der Umsetzung der Softwarearchitektur und Entwicklung des Systems
-berücksichtigt werden müssen.
+Bei der hier beschriebenen Software handelt es sich um eine ASP.NET Web-App, mit der Informationen zu beliebigen Pokémons abgerufen werden können. Die App wird von einer Gruppe an Pokémon-Spielern eingesetzt, diese besteht aus 30 Leuten. Die Spieler erwarten sich durch die App, ergänzend zum Spiel Informationen zu Pokémons einsehen zu können.
 
-Dazu gehören:
+Die Informationen werden von einer externen Pokédex REST-API abgerufen und in einer Postgres Datenbank gespeichert, wodurch die Anfragen auf die API reduziert werden sollen. Diese Komponenten werden in der Zukunft möglicherweise durch andere Anbieter ausgetauscht. Aus diesem Grund soll die Architektur der App dafür ausgelegt sein, dass einzelne Module möglichst leicht ausgetauscht werden können. Als Grundlage dient hierfür die "Clean Architecture" von Jason Taylor.
 
--   zugrunde liegende Geschäftsziele,
-
--   wesentliche Aufgabenstellungen,
-
--   wesentliche funktionale Anforderungen,
-
--   Qualitätsziele für die Architektur und
-
--   relevante Stakeholder und deren Erwartungshaltung.
+Das Ziel der Software ist darüber hinaus nicht, eine komplexe neue App zu entwickeln, sondern die Software Qualität möglichst gut abzusichern.
 
 ## Aufgabenstellung
 
-<div class="formalpara-title">
-
-**Inhalt**
-
-</div>
-
-Kurzbeschreibung der fachlichen Aufgabenstellung, treibenden Kräfte,
-Extrakt (oder Abstract) der Anforderungen. Verweis auf (hoffentlich
-vorliegende) Anforderungsdokumente (mit Versionsbezeichnungen und
-Ablageorten).
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Aus Sicht der späteren Nutzung ist die Unterstützung einer fachlichen
-Aufgabe oder Verbesserung der Qualität der eigentliche Beweggrund, ein
-neues System zu schaffen oder ein bestehendes zu modifizieren.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Kurze textuelle Beschreibung, eventuell in tabellarischer Use-Case Form.
-Sofern vorhanden, sollte die Aufgabenstellung Verweise auf die
-entsprechenden Anforderungsdokumente enthalten.
-
-Halten Sie diese Auszüge so knapp wie möglich und wägen Sie Lesbarkeit
-und Redundanzfreiheit gegeneinander ab.
-
-Siehe [Anforderungen und Ziele](https://docs.arc42.org/section-1/) in
-der online-Dokumentation (auf Englisch!).
+| Use-Case                | Beschreibung                                                                                                                                                                                                                                                                    | Stakeholder |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| 1. Abrufen über Website | Informationen zu einem bestimmten Pokemon sollen über die Website abgerufen werden. Dabei sucht der Spieler das Pokemon anhand seines Namens, den er auf der Startseite der Web-App eingibt. Existiert kein Pokemon mit diesem Namen, soll eine Fehlermeldung angezeigt werden. | Spieler     |
+| 2. Abrufen über API     | Informationen zu Pokemons können darüber hinaus auch durch eine integrierte REST-API abgerufen werden. Diese sucht ein Pokemon anhand seines Namens und liefert das Ergebnis als JSON kodiert zurück.                                                                           | Spieler     |
 
 ## Qualitätsziele
 
-<div class="formalpara-title">
-
-**Inhalt**
-
-</div>
-
-Die Top-3 bis Top-5 der Qualitätsanforderungen für die Architektur,
-deren Erfüllung oder Einhaltung den maßgeblichen Stakeholdern besonders
-wichtig sind. Gemeint sind hier wirklich Qualitätsziele, die nicht
-unbedingt mit den Zielen des Projekts übereinstimmen. Beachten Sie den
-Unterschied.
-
-Hier ein Überblick möglicher Themen (basierend auf dem ISO 25010
-Standard):
-
-![Kategorien von
-Qualitätsanforderungen](images/01_2_iso-25010-topics-EN.drawio.png)
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Weil Qualitätsziele grundlegende Architekturentscheidungen oft
-maßgeblich beeinflussen, sollten Sie die für Ihre Stakeholder relevanten
-Qualitätsziele kennen, möglichst konkret und operationalisierbar.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Tabellarische Darstellung der Qualitätsziele mit möglichst konkreten
-Szenarien, geordnet nach Prioritäten.
+| Priorität | Qualitätskriterium  | Ziele                                                                                                                                                                                                                                    | Maßnahmen                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| --------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1         | Wartbarkeit         | - Einfache Weiterentwicklung des Projekts<br>- Hohe Verständlichkeit und Qualität des Codes<br>- Komponenten wie Datenbank oder API müssen zentral ausgetauscht werden können.<br>- Nur 1 Programmiersprache für alle Tests, keine DSLs. | - Projektstruktur mit 9 Projekten nach [Clean Architecture](https://jasontaylor.dev/clean-architecture-getting-started/) von Jason Taylor.<br>- Zyklische Abhängigkeiten werden bereits durch den Compiler erkannt.<br>- Alle Tests werden durch C# Projekte umgesetzt. Entwickler müssen somit keine DSLs für verschiedene Tests beherrschen.<br>- Code Style und Conventions werden durch die Pipeline geprüft. Bereits bei einem einzigen Verstoß oder Warnung schlägt die Pipeline fehl.<br>- Architektur Regeln werden durch ArchUnit Tests geprüft.<br>- Code Qualität wird mit SonarCloud überprüft.<br>- Gesamter Code (inklusive Tests) ist mit Kommentaren versehen.<br>- Dependency Injection in Kombination mit Interfaces für erhöhte Modularität. |
+| 2         | Funktionale Eignung | - Die App muss die Bedürfnisse / Anforderungen der Benutzer erfüllen.                                                                                                                                                                    | - Projekt wird auf mehreren Ebenen funktional getestet: Unit Tests, Integration Tests, E2E Tests. Letztere testen speziell zuvor definierte Use-Cases.<br>- Erreichte Coverage: 100%                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 3         | Reliability         | - Die App soll auch bei deutlich höherer Last (500 statt 30 parallelen Anfragen) jede Anfrage ohne Fehler beantworten.                                                                                                                   | - Last Tests mit NBomber<br>- SonarCloud mit 0 Reliability Warnungen                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 4         | Security            | - Der Code soll keine bekannten Sicherheitslücken aufweisen und neue automatisch erkennen.                                                                                                                                               | - Aqasecurity Trivy Vulnerability Scanner in GitHub Action<br>- CodeQL Scanner für C# und JS/TS<br>- SonarCloud mit 0 offenen Security Warnungen<br>- Regelmäßige Ausführung der Security-Pipelines, auch ohne Änderungen am Repo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| 5         | Usability           | - Die Funktionalität der UI soll automatisiert sichergestellt werden.<br>- Pokémons im Cache müssen innerhalb von 30ms aufgerufen werden können.                                                                                         | - Frontend Tests mit Playwright (E2E Tests)<br>- Schnelle durchschnittliche Ladezeiten für Pokemons im Cache (< 30ms) durch Last Tests sichergestellt, auch bei 500 parallelen Anfragen.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
 ## Stakeholder
 
-<div class="formalpara-title">
-
-**Inhalt**
-
-</div>
-
-Expliziter Überblick über die Stakeholder des Systems – über alle
-Personen, Rollen oder Organisationen –, die
-
--   die Architektur kennen sollten oder
-
--   von der Architektur überzeugt werden müssen,
-
--   mit der Architektur oder dem Code arbeiten (z.B. Schnittstellen
-    nutzen),
-
--   die Dokumentation der Architektur für ihre eigene Arbeit benötigen,
-
--   Entscheidungen über das System und dessen Entwicklung treffen.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Sie sollten die Projektbeteiligten und -betroffenen kennen, sonst
-erleben Sie später im Entwicklungsprozess Überraschungen. Diese
-Stakeholder bestimmen unter anderem Umfang und Detaillierungsgrad der
-von Ihnen zu leistenden Arbeit und Ergebnisse.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Tabelle mit Rollen- oder Personennamen, sowie deren Erwartungshaltung
-bezüglich der Architektur und deren Dokumentation.
-
-| Rolle        | Kontakt        | Erwartungshaltung |
-|--------------|----------------|-------------------|
-| *\<Rolle-1>* | *\<Kontakt-1>* | *\<Erwartung-1>*  |
-| *\<Rolle-2>* | *\<Kontakt-2>* | *\<Erwartung-2>*  |
+| Rolle         | Kontakt    | Erwartungshaltung                                                             |
+| ------------- | ---------- | ----------------------------------------------------------------------------- |
+| Spieler       | -          | Zuverlässiges Abrufen von Pokémon Informationen                               |
+| Entwickler    | -          | Gute Dokumentation, gute Projektstruktur, hohe Code Qualität                  |
+| API-Betreiber | pokeapi.co | Keine Überlastung der API durch viele Anfragen                                |
+| Dozent        | -          | Vollständige Dokumentation des Projekts, Verifizierung der Qualitätskriterien |
 
 # Randbedingungen
 
