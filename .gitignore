@@ -2,3 +2,4 @@
 obj/
 .idea/
 *.sln.DotSettings.user
+.obsidian/

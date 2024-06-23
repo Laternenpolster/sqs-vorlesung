@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PokemonLookup.Infrastructure;
+using PokemonLookup.Infrastructure.Caching;
 using PokemonLookup.Infrastructure.Data;
 
 namespace PokemonLookup.UnitTests.Services;
@@ -21,7 +21,7 @@ public class CachingServiceTest
             .Options;
 
         await using var mockContext = new DataContext(dbContextOptions);
-        var cachingService = new CachingService(mockContext);
+        var cachingService = new DatabaseCachingService(mockContext);
 
         var testPokemon = TestDataProvider.GetValidTestPokemon();
 
