@@ -429,71 +429,18 @@ Entweder tabellarisch oder als Freitext.
 
 # Risiken und technische Schulden
 
-<div class="formalpara-title">
+| Risiko / Technische Schuld | Beschreibung                                                                                                                                         | Maßnahme                                             | Prio   |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------ |
+| Sicherheitslücken          | Sicherheitslücken können in Dependencies oder Docker Images erkannt werden.                                                                          | Regelmäßiger Dependency Scan, auch beim Docker Image | Hoch   |
+| Belastung der Pokédex API  | Wird ein Pokémon, das nicht im Cache ist, gleichzeitig n mal abgerufen wird, wird die Pokédex API ]1..n\[ Mal aufgerufen.                            | Synchronisierung der API Anfragen                    | Hoch   |
+| Performance im Load-Test   | Während dem Load Test wird die WebApp wie in einem Integration Test gestartet und läuft im gleichen Prozess. Dadurch ist die Performance schlechter. | Starten der WebApp in einem Docker Container         | Mittel |
 
-**Inhalt**
-
-</div>
-
-Eine nach Prioritäten geordnete Liste der erkannten Architekturrisiken
-und/oder technischen Schulden.
-
-> Risikomanagement ist Projektmanagement für Erwachsene.
->
-> —  Tim Lister Atlantic Systems Guild
-
-Unter diesem Motto sollten Sie Architekturrisiken und/oder technische
-Schulden gezielt ermitteln, bewerten und Ihren Management-Stakeholdern
-(z.B. Projektleitung, Product-Owner) transparent machen.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Liste oder Tabelle von Risiken und/oder technischen Schulden, eventuell
-mit vorgeschlagenen Maßnahmen zur Risikovermeidung, Risikominimierung
-oder dem Abbau der technischen Schulden.
-
-Siehe [Risiken und technische
-Schulden](https://docs.arc42.org/section-11/) in der
-online-Dokumentation (auf Englisch!).
 
 # Glossar
 
-<div class="formalpara-title">
-
-**Inhalt**
-
-</div>
-
-Die wesentlichen fachlichen und technischen Begriffe, die Stakeholder im
-Zusammenhang mit dem System verwenden.
-
-Nutzen Sie das Glossar ebenfalls als Übersetzungsreferenz, falls Sie in
-mehrsprachigen Teams arbeiten.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Sie sollten relevante Begriffe klar definieren, so dass alle Beteiligten
-
--   diese Begriffe identisch verstehen, und
-
--   vermeiden, mehrere Begriffe für die gleiche Sache zu haben.
-
-Zweispaltige Tabelle mit \<Begriff> und \<Definition>.
-
-Eventuell weitere Spalten mit Übersetzungen, falls notwendig.
-
-Siehe [Glossar](https://docs.arc42.org/section-12/) in der
-online-Dokumentation (auf Englisch!).
-
-| Begriff        | Definition        |
-|----------------|-------------------|
-| *\<Begriff-1>* | *\<Definition-1>* |
-| *\<Begriff-2*  | *\<Definition-2>* |
+| Begriff    | Definition                                                                 |
+| ---------- | -------------------------------------------------------------------------- |
+| C#         | Programmiersprache von Microsoft, verwendet u.a. bei .NET Applikationen    |
+| ASP.NET    | Framework, mit dem C# Web Apps und APIs entwickelt werden können           |
+| PostgreSQL | Relationale Datenbank                                                      |
+| Komponente | Klasse, die einen eindeutig abgrenzbaren Anteil der Business Logic enthält |
