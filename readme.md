@@ -174,191 +174,44 @@ Der Inhalt des gestrichelten Kastens wird im Rahmen dieses Projekts entwickelt. 
 
 # Bausteinsicht
 
-<div class="formalpara-title">
-
-**Inhalt**
-
-</div>
-
-Die Bausteinsicht zeigt die statische Zerlegung des Systems in Bausteine
-(Module, Komponenten, Subsysteme, Klassen, Schnittstellen, Pakete,
-Bibliotheken, Frameworks, Schichten, Partitionen, Tiers, Funktionen,
-Makros, Operationen, Datenstrukturen, …) sowie deren Abhängigkeiten
-(Beziehungen, Assoziationen, …)
-
-Diese Sicht sollte in jeder Architekturdokumentation vorhanden sein. In
-der Analogie zum Hausbau bildet die Bausteinsicht den *Grundrissplan*.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Behalten Sie den Überblick über den Quellcode, indem Sie die statische
-Struktur des Systems durch Abstraktion verständlich machen.
-
-Damit ermöglichen Sie Kommunikation auf abstrakterer Ebene, ohne zu
-viele Implementierungsdetails offenlegen zu müssen.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Die Bausteinsicht ist eine hierarchische Sammlung von Blackboxen und
-Whiteboxen (siehe Abbildung unten) und deren Beschreibungen.
-
-![Hierarchie in der Bausteinsicht](images/05_building_blocks-DE.png)
-
-**Ebene 1** ist die Whitebox-Beschreibung des Gesamtsystems, zusammen
-mit Blackbox-Beschreibungen der darin enthaltenen Bausteine.
-
-**Ebene 2** zoomt in einige Bausteine der Ebene 1 hinein. Sie enthält
-somit die Whitebox-Beschreibungen ausgewählter Bausteine der Ebene 1,
-jeweils zusammen mit Blackbox-Beschreibungen darin enthaltener
-Bausteine.
-
-**Ebene 3** zoomt in einige Bausteine der Ebene 2 hinein, usw.
-
-Siehe [Bausteinsicht](https://docs.arc42.org/section-5/) in der
-online-Dokumentation (auf Englisch!).
+![[Bausteinsicht.png]]
 
 ## Whitebox Gesamtsystem
 
-An dieser Stelle beschreiben Sie die Zerlegung des Gesamtsystems anhand
-des nachfolgenden Whitebox-Templates. Dieses enthält:
+Die Zerlegung des Gesamtsystems orientiert sich an der Struktur von Clean Architecture. Die Projekte Domain, Application, Infrastructure und Web stellen dabei zentrale Komponenten der Software dar. Die Namen und Funktionen der Komponenten sind durch Clean Architecture fest geregelt.
 
--   Ein Übersichtsdiagramm
+### Enthaltene Bausteine
 
--   die Begründung dieser Zerlegung
+| **Name**       | **Verantwortung**                                                                                                                               |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pokémon Lookup | Eine ASP.NET WebApp, die Suchanfragen der Benutzer entgegennimmt und mit Pokémon-Details beantwortet. Diese App wird in diesem Repo entwickelt. |
 
--   Blackbox-Beschreibungen der hier enthaltenen Bausteine. Dafür haben
-    Sie verschiedene Optionen:
+### Schnittstellen
 
-    -   in *einer* Tabelle, gibt einen kurzen und pragmatischen
-        Überblick über die enthaltenen Bausteine sowie deren
-        Schnittstellen.
+- Player - Pokémon Lookup: HTTP / REST (JSON)
+- Pokémon Lookup - Pokédex API: REST (JSON)
+- Pokémon Lookup - Pokémon Cache: EF-Core
 
-    -   als Liste von Blackbox-Beschreibungen der Bausteine, gemäß dem
-        Blackbox-Template (siehe unten). Diese Liste können Sie, je nach
-        Werkzeug, etwa in Form von Unterkapiteln (Text), Unter-Seiten
-        (Wiki) oder geschachtelten Elementen (Modellierungswerkzeug)
-        darstellen.
+## Ebene 1
+![](https://jasontaylor.dev/wp-content/uploads/2020/01/Figure-01-2.png)
+Quelle: https://jasontaylor.dev/clean-architecture-getting-started/
 
--   (optional:) wichtige Schnittstellen, die nicht bereits im
-    Blackbox-Template eines der Bausteine erläutert werden, aber für das
-    Verständnis der Whitebox von zentraler Bedeutung sind. Aufgrund der
-    vielfältigen Möglichkeiten oder Ausprägungen von Schnittstellen
-    geben wir hierzu kein weiteres Template vor. Im schlimmsten Fall
-    müssen Sie Syntax, Semantik, Protokolle, Fehlerverhalten,
-    Restriktionen, Versionen, Qualitätseigenschaften, notwendige
-    Kompatibilitäten und vieles mehr spezifizieren oder beschreiben. Im
-    besten Fall kommen Sie mit Beispielen oder einfachen Signaturen
-    zurecht.
+### Whitebox Domain
 
-***\<Übersichtsdiagramm>***
+- Enthält Klassen, die über die Grenzen der Applikation in einem Unternehmen Relevanz haben. Sie werden auch als "Enterprise Logic" beschrieben. Diese Schicht darf keine Abhängigkeiten haben (z.B. Datenbank, REST-Anfragen).
+### Whitebox Application
 
-Begründung  
-*\<Erläuternder Text>*
+- Business Logic, die im Rahmen der WebApp Verwendung findet. Hier dürfen ebenfalls keine Abhängigkeiten vorhanden sein.
+### Whitebox Infrastructure
 
-Enthaltene Bausteine  
-*\<Beschreibung der enthaltenen Bausteine (Blackboxen)>*
+- In dieser Schicht werden u.a. Interfaces aus Application implementiert. Abhängigkeiten wie zu einer Datenbank sollen hier sein.
+- Schnittstellen: Pokémon Cache, Pokédex API
+### Whitebox Web
 
-Wichtige Schnittstellen  
-*\<Beschreibung wichtiger Schnittstellen>*
-
-Hier folgen jetzt Erläuterungen zu Blackboxen der Ebene 1.
-
-Falls Sie die tabellarische Beschreibung wählen, so werden Blackboxen
-darin nur mit Name und Verantwortung nach folgendem Muster beschrieben:
-
-| **Name**        | **Verantwortung** |
-|-----------------|-------------------|
-| *\<Blackbox 1>* |  *\<Text>*        |
-| *\<Blackbox 2>* |  *\<Text>*        |
-
-Falls Sie die ausführliche Liste von Blackbox-Beschreibungen wählen,
-beschreiben Sie jede wichtige Blackbox in einem eigenen
-Blackbox-Template. Dessen Überschrift ist jeweils der Namen dieser
-Blackbox.
-
-### \<Name Blackbox 1>
-
-Beschreiben Sie die \<Blackbox 1> anhand des folgenden
-Blackbox-Templates:
-
--   Zweck/Verantwortung
-
--   Schnittstelle(n), sofern diese nicht als eigenständige
-    Beschreibungen herausgezogen sind. Hierzu gehören eventuell auch
-    Qualitäts- und Leistungsmerkmale dieser Schnittstelle.
-
--   (Optional) Qualitäts-/Leistungsmerkmale der Blackbox, beispielsweise
-    Verfügbarkeit, Laufzeitverhalten o. Ä.
-
--   (Optional) Ablageort/Datei(en)
-
--   (Optional) Erfüllte Anforderungen, falls Sie Traceability zu
-    Anforderungen benötigen.
-
--   (Optional) Offene Punkte/Probleme/Risiken
-
-*\<Zweck/Verantwortung>*
-
-*\<Schnittstelle(n)>*
-
-*\<(Optional) Qualitäts-/Leistungsmerkmale>*
-
-*\<(Optional) Ablageort/Datei(en)>*
-
-*\<(Optional) Erfüllte Anforderungen>*
-
-*\<(optional) Offene Punkte/Probleme/Risiken>*
-
-### \<Name Blackbox 2>
-
-*\<Blackbox-Template>*
-
-### \<Name Blackbox n>
-
-*\<Blackbox-Template>*
-
-### \<Name Schnittstelle 1>
-
-…
-
-### \<Name Schnittstelle m>
+- Das Frontend der WebApp, auch als Presentation Layer bezeichnet. Hier wird keine neue Business Logic eigeführt, sondern die anderen Komponenten kombiniert. So wird ermöglicht, dass das Frontend mit möglichst wenig Aufwand gegen ein anderes getauscht wird. Abhängigkeiten zu Infrastructure dürfen jedoch nicht bestehen. (Einzige Ausnahme: Beim Setup der Dependency Injection in der Klasse Program.cs)
+- Schnittstellen: HTTP und REST zum Spieler
 
 ## Ebene 2
-
-Beschreiben Sie den inneren Aufbau (einiger) Bausteine aus Ebene 1 als
-Whitebox.
-
-Welche Bausteine Ihres Systems Sie hier beschreiben, müssen Sie selbst
-entscheiden. Bitte stellen Sie dabei Relevanz vor Vollständigkeit.
-Skizzieren Sie wichtige, überraschende, riskante, komplexe oder
-besonders volatile Bausteine. Normale, einfache oder standardisierte
-Teile sollten Sie weglassen.
-
-### Whitebox *\<Baustein 1>*
-
-…zeigt das Innenleben von *Baustein 1*.
-
-*\<Whitebox-Template>*
-
-### Whitebox *\<Baustein 2>*
-
-*\<Whitebox-Template>*
-
-…
-
-### Whitebox *\<Baustein m>*
-
-*\<Whitebox-Template>*
-
-## Ebene 3
 
 Beschreiben Sie den inneren Aufbau (einiger) Bausteine aus Ebene 2 als
 Whitebox.
@@ -366,19 +219,27 @@ Whitebox.
 Bei tieferen Gliederungen der Architektur kopieren Sie diesen Teil von
 arc42 für die weiteren Ebenen.
 
-### Whitebox \<\_Baustein x.1\_\>
+### Whitebox Domain
 
-…zeigt das Innenleben von *Baustein x.1*.
+- **Entities**: Enthält Entities, die unternehmensweit Bedeutung haben. Ein Beispiel hierfür ist die Datenklasse Pokemon.cs
 
-*\<Whitebox-Template>*
+### Whitebox Application
 
-### Whitebox \<\_Baustein x.2\_\>
+- **Services**: Enthält Interfaces für alle Komponenten der App. Implementiert werden diese erst durch Infrastructure.
+- **Exceptions**: Exceptions, die über mehrere Schichten hinweg zur Kommunikation verwendet werden.
 
-*\<Whitebox-Template>*
+### Whitebox Infrastructure
 
-### Whitebox \<\_Baustein y.1\_\>
+- **Data**: Enthält die EF-Core Context-Klasse, die zur Kommunikation zur Datenbank verwendet wird. 
+- **Caching**: Komponente, die Datenbankoperationen für den Pokémon Cache kapselt.
+- **ExternalLookup**: Komponenten zur Kommunikation mit einer beliebigen Pokédex REST-API. Außerdem existiert hier eine Komponente, die das Zusammenspiel aus Cache und Pokédex API koordiniert.
 
-*\<Whitebox-Template>*
+### Whitebox Web
+Die enthaltenen Komponenten werden nicht genauer erläutert, da es sich um Standards bei einer ASP.NET MVC WebApp handelt.
+
+- **Views**: ASP.NET Razor Pages, die durch einen Controller erzeugt werden. Sie sind das eigentliche Frontend der WebApp.
+- **Controllers**: Verarbeitung von Benutzer-Anfragen auf bestimmten Endpunkten. Hierdurch wird z.B. bei einer Anfrage auf die Startseite der WebApp das entsprechende Frontend (=Views) zurückgegeben.
+- **Models**: ViewModels, die vom Controller an Views übergeben werden. Hierdurch werden die Daten bestimmt, die z.B. in Feldern im Frontend angezeigt werden.
 
 # Laufzeitsicht
 
@@ -446,12 +307,12 @@ Ausdrucksmöglichkeiten. Nutzen Sie beispielsweise:
 Siehe [Laufzeitsicht](https://docs.arc42.org/section-6/) in der
 online-Dokumentation (auf Englisch!).
 
-## *\<Bezeichnung Laufzeitszenario 1>*
+## Abrufen eines Pokemons ohne Existenz im Cache
 
--   \<hier Laufzeitdiagramm oder Ablaufbeschreibung einfügen>
+Ein Spieler ruft ein Pokemon über die Website der App ab, das bis jetzt nicht im Cache gespeichert war. Es muss von der Pokédex API abgerufen werden und im Cache gespeichert werden.
+![[AblaufNotCached.png]]
 
--   \<hier Besonderheiten bei dem Zusammenspiel der Bausteine in diesem
-    Szenario erläutern>
+ASP.NET Controller ist im Diagramm eine Zusammenfassung aus verschiedenen Komponenten der Software. Die eigentliche Logik wird von mehreren Services ausgeführt, die die Business Logic trennen und eigene Fehler einführen.
 
 ## *\<Bezeichnung Laufzeitszenario 2>*
 
