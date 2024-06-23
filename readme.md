@@ -3,6 +3,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=laternenpolster_sqs-vorlesung&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=laternenpolster_sqs-vorlesung)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=laternenpolster_sqs-vorlesung&metric=coverage)](https://sonarcloud.io/summary/new_code?id=laternenpolster_sqs-vorlesung)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=laternenpolster_sqs-vorlesung&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=laternenpolster_sqs-vorlesung)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=laternenpolster_sqs-vorlesung&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=laternenpolster_sqs-vorlesung)
 
 **Über arc42**
 
@@ -335,6 +336,11 @@ Zum Start des Docker Compose Projekts müssen folgende Umgebungsvariablen konfig
 | DATABASE_DB       | Datenbank, die auf einem Postgres Server verwendet werden soll |
 | DATABASE_SERVER   | Hostname des Postgres Servers                                  |
 | DATABASE_PORT     | Port des Postgres Servers                                      |
+Anschließend kann das Projekt folgendermaßen gestartet werden:
+```sh
+cd PokemonLookup
+docker compose up
+```
 
 ![](images/Verteilungssicht.png)
 
@@ -390,153 +396,31 @@ Für jedes Infrastrukturelement kopieren Sie die Struktur aus Ebene 1.
 
 # Querschnittliche Konzepte
 
-<div class="formalpara-title">
+## Clean Architecture
+Die Entscheidung mit dem größten Einfluss auf die gesamte Software ist die Verwendung von Clean Architecture. Wie bereits unter [Bausteinsicht](#Bausteinsicht) beschrieben, wird der Code der Anwendung in die Projekte "Domain", "Application", "Infrastructure" und "Web" unterteilt. Inhalt und Funktion der Projekte wird ebenfalls unter [Bausteinsicht](#Bausteinsicht) beschrieben.
 
-**Inhalt**
+Dadurch ergeben sich laut Jason Taylor folgende Vorteile:
+- Unabhängigkeit von Frameworks
+- Einfache Testbarkeit
+- Unabhängigkeit zum Frontend und Datenbank
+- Domain und Application sind unabhängig zu jeglichem externen Code
 
-</div>
+Mehr Informationen zu Clean Architecture finden sich [hier](https://jasontaylor.dev/clean-architecture-getting-started/).
 
-Dieser Abschnitt beschreibt übergreifende, prinzipielle Regelungen und
-Lösungsansätze, die an mehreren Stellen (=*querschnittlich*) relevant
-sind.
+## Inversion of Control
+Das Projekt "Web" verwendet Dependency Injection, um Inversion of Control zu ermöglichen. Besonders ist, dass Komponenten bereits in Projekten außerhalb von Web transitiv voneinander abhängen können.
 
-Solche Konzepte betreffen oft mehrere Bausteine. Dazu können vielerlei
-Themen gehören, beispielsweise:
+Eine Komponente darf nur über eine Funktionalität verfügen (z.B. "Cache Lesen / Schreiben" oder "Externe API anfragen"). Komponenten müssen immer über ein Interface verfügen, über dass die Funktionalität der Komponente verwendet werden kann. Dieses wird in der Dependency Injection registriert und von andern Klassen oder Komponenten verwendet. Eine direkte Instanziierung oder Verwendung der Komponente ohne Interface darf nicht stattfinden, außer in Tests.
 
--   Modelle, insbesondere fachliche Modelle
+Von dieser Regelung nicht betroffen sind Controller, Views, ViewModels und Datenklassen.
 
--   Architektur- oder Entwurfsmuster
-
--   Regeln für den konkreten Einsatz von Technologien
-
--   prinzipielle — meist technische — Festlegungen übergreifender Art
-
--   Implementierungsregeln
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Konzepte bilden die Grundlage für *konzeptionelle Integrität*
-(Konsistenz, Homogenität) der Architektur und damit eine wesentliche
-Grundlage für die innere Qualität Ihrer Systeme.
-
-Manche dieser Themen lassen sich nur schwer als Baustein in der
-Architektur unterbringen (z.B. das Thema „Sicherheit“).
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Kann vielfältig sein:
-
--   Konzeptpapiere mit beliebiger Gliederung,
-
--   übergreifende Modelle/Szenarien mit Notationen, die Sie auch in den
-    Architektursichten nutzen,
-
--   beispielhafte Implementierung speziell für technische Konzepte,
-
--   Verweise auf „übliche“ Nutzung von Standard-Frameworks
-    (beispielsweise die Nutzung von Hibernate als Object/Relational
-    Mapper).
-
-<div class="formalpara-title">
-
-**Struktur**
-
-</div>
-
-Eine mögliche (nicht aber notwendige!) Untergliederung dieses
-Abschnittes könnte wie folgt aussehen (wobei die Zuordnung von Themen zu
-den Gruppen nicht immer eindeutig ist):
-
--   Fachliche Konzepte
-
--   User Experience (UX)
-
--   Sicherheitskonzepte (Safety und Security)
-
--   Architektur- und Entwurfsmuster
-
--   Unter-der-Haube
-
--   Entwicklungskonzepte
-
--   Betriebskonzepte
-
-![Possible topics for crosscutting
-concepts](images/08-Crosscutting-Concepts-Structure-DE.png)
-
-Siehe [Querschnittliche Konzepte](https://docs.arc42.org/section-8/) in
-der online-Dokumentation (auf Englisch).
-
-## *\<Konzept 1>*
-
-*\<Erklärung>*
-
-## *\<Konzept 2>*
-
-*\<Erklärung>*
-
-…
-
-## *\<Konzept n>*
-
-*\<Erklärung>*
+## Code Stil / Qualität
+Der Code Stil muss dem Standard bei der C# (Version 12.0) Entwicklung entsprechen. Diese Regel wird durch GitHub Actions überprüft. Alle Tests müssen in C# entwickelt sein, damit der Entwickler möglichst wenig Sprachen beherrschen muss.
+Alle Komponenten oder Änderungen in diesen müssen mindestens durch Unit Tests getestet werden. Umfangreichere Änderungen erfordern eine Anpassung von Integration-, E2E-, Load- oder Architektur-Tests.
 
 # Architekturentscheidungen
 
-<div class="formalpara-title">
-
-**Inhalt**
-
-</div>
-
-Wichtige, teure, große oder riskante Architektur- oder
-Entwurfsentscheidungen inklusive der jeweiligen Begründungen. Mit
-"Entscheidungen" meinen wir hier die Auswahl einer von mehreren
-Alternativen unter vorgegebenen Kriterien.
-
-Wägen Sie ab, inwiefern Sie Entscheidungen hier zentral beschreiben,
-oder wo eine lokale Beschreibung (z.B. in der Whitebox-Sicht von
-Bausteinen) sinnvoller ist. Vermeiden Sie Redundanz. Verweisen Sie evtl.
-auf Abschnitt 4, wo schon grundlegende strategische Entscheidungen
-beschrieben wurden.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Stakeholder des Systems sollten wichtige Entscheidungen verstehen und
-nachvollziehen können.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Verschiedene Möglichkeiten:
-
--   ADR ([Documenting Architecture
-    Decisions](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions))
-    für jede wichtige Entscheidung
-
--   Liste oder Tabelle, nach Wichtigkeit und Tragweite der
-    Entscheidungen geordnet
-
--   ausführlicher in Form einzelner Unterkapitel je Entscheidung
-
-Siehe [Architekturentscheidungen](https://docs.arc42.org/section-9/) in
-der arc42 Dokumentation (auf Englisch!). Dort finden Sie Links und
-Beispiele zum Thema ADR.
+Die zentrale Architekturentscheidung ist Clean Architecture von Jason Taylor. Diese und weitere Entscheidungen werden bereits unter [Bausteinsicht](#Bausteinsicht) und [Querschnittliche Konzepte](#Querschnittliche Konzepte) beschrieben und werden deshalb hier nicht wiederholt.
 
 # Qualitätsanforderungen
 
