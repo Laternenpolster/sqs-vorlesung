@@ -234,6 +234,10 @@ Alle Komponenten oder Änderungen in diesen müssen mindestens durch Unit Tests 
 
 Die zentrale Architekturentscheidung ist Clean Architecture von Jason Taylor. Diese und weitere Entscheidungen werden bereits unter [Bausteinsicht](#Bausteinsicht) und [Querschnittliche Konzepte](#Querschnittliche-Konzepte) beschrieben und werden deshalb hier nicht wiederholt.
 
+Das Frontend wird mit ASP.NET Razor Pages umgesetzt. Dabei handelt es sich um eine Kombination aus HTML und C#. Dies wird gewählt, um die Sprachenvielfalt im Projekt so gering wie möglich zu halten. Wie in [Bausteinsicht](#Bausteinsicht) beschrieben, können Views außerdem mithilfe von ViewModels mit Controllern kommunizieren.
+
+Außerdem wird das gesamte System bestehend aus Pokémon Lookup und Pokémon Cache in Docker Containern ausgeführt. Details zu dieser Entscheidung finden sich in [Verteilungssicht](#Verteilungssicht).
+
 # Qualitätsanforderungen
 
 ## Qualitätsbaum
